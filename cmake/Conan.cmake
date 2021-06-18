@@ -17,12 +17,14 @@ macro(run_conan)
     REQUIRES
     ${CONAN_EXTRA_REQUIRES}
     catch2/2.13.3
+    gtest/1.11.0
     docopt.cpp/0.6.2
     fmt/6.2.0
     spdlog/1.5.0
     sml/1.1.4
     OPTIONS
     ${CONAN_EXTRA_OPTIONS}
+    gtest:build_gmock=True
     BASIC_SETUP
     CMAKE_TARGETS # individual targets to link to
     BUILD
