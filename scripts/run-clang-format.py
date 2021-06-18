@@ -85,8 +85,6 @@ def main():
   parser.add_argument('-j', type=int, default=0,
                       help='number of tidy instances to be run in parallel.')
   parser.add_argument('-fix', action='store_true', help='reformat files')
-  parser.add_argument('-exclude-dirs', nargs='*', default=[],
-                      help='Directories to exclude from analysis.')
   parser.add_argument('-warnings-as-errors', action='store_true',
                       help='Let the clang-tidy process return != 0 if a check failed.')
   parser.add_argument('-quiet', action='store_true',
@@ -134,8 +132,7 @@ def main():
 
     # Fill the queue with files.
     for name in files:
-      if not name.startswith(tuple(args.exclude_dirs)):
-        task_queue.put(name)
+      task_queue.put(name)
 
     # Wait for all threads to be done.
     task_queue.join()
