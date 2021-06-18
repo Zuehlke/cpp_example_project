@@ -12,15 +12,19 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missin
   bzip2 \
   clang-format \
   cmake \
+  cppcheck \
+  lsb-release \
+  ninja-build \
   python \
   python3-pip \
   ssh \
+  software-properties-common \
   sudo \
   tar \
+  wget \
   && apt-get autoremove -y && apt-get clean
-
-
-
+ RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)" \
+ RUN pip install --user conan
 
 
 
@@ -35,6 +39,8 @@ ARG DEV_USER=dev
 RUN apt-get -y install --fix-missing \
   ccache \
   curl \
+  doxygen \
+  graphviz \
   shellcheck \
   valgrind \
   vim \
