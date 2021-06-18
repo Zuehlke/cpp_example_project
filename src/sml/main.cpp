@@ -10,13 +10,13 @@
 #include "logger.h"
 #include "states.h"
 #include "events.h"
+#include "actions.h"
 #include "plantumlDump.h"
 
 using namespace std::chrono_literals;
 
 namespace ReallyCoolSM {
 
-std::chrono::time_point<std::chrono::steady_clock> startTime;
 
 struct StopWatchStateMachine
 {
@@ -24,20 +24,9 @@ struct StopWatchStateMachine
   {
     using namespace boost::sml;
 
-    auto turnOffAction = [](auto) { spdlog::info("turned off"); };
-    auto startAction = [&startTime = startTime]() {
-      startTime = std::chrono::steady_clock::now();
-    };
-    auto stopAction = [&startTime = startTime]() {
-      const auto diff = std::chrono::steady_clock::now() - startTime;
-      spdlog::info("Elasped time: {}s", std::chrono::duration_cast<std::chrono::seconds>(diff).count());
-    };
-
-    const auto turnedOff = state<class turnedOff>;
-
     return make_transition_table(
       // clang-format off
-      *turnedOff + event<turnOn> = state<Idle>
+      *state<TurnedOff> + event<turnOn> = state<Idle>
       , state<Idle> + event<start> / startAction = state<Running>
       , state<Running> + event<stop> / stopAction = state<Stopped>
       , state<Running> + event<reset> = state<Idle>
