@@ -1,5 +1,9 @@
 #pragma once
 
+struct TurnedOff
+{
+};
+
 struct Idle
 {
 };
