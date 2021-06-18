@@ -5,6 +5,8 @@ project(myproject CXX)
 include(cmake/StandardProjectSettings.cmake)
 include(cmake/PreventInSourceBuilds.cmake)
 
+include(cmake/CodeFormat.cmake)
+
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
 target_compile_features(project_options INTERFACE cxx_std_17)
