@@ -1,0 +1,6 @@
+
+# Ignore vim/YouCompleteMe settings
+.cache/
+.vimrc
+compile_commands.json
+
