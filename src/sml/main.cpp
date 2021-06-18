@@ -10,10 +10,11 @@
 #include "logger.h"
 #include "states.h"
 #include "events.h"
+#include "plantumlDump.h"
 
 using namespace std::chrono_literals;
 
-namespace {
+namespace ReallyCoolSM {
 
 std::chrono::time_point<std::chrono::steady_clock> startTime;
 
@@ -46,17 +47,17 @@ struct StopWatchStateMachine
     );
   }
 };
-}// namespace
+}// namespace ReallyCoolSM
 
 int main()
 {
   CustomLogger logger;
-  boost::sml::sm<StopWatchStateMachine, boost::sml::logger<CustomLogger>> sm{ logger };
+  boost::sml::sm<ReallyCoolSM::StopWatchStateMachine, boost::sml::logger<CustomLogger>> sm{ logger };
 
   sm.process_event(turnOn{});
 
   sm.process_event(start{});
-  std::this_thread::sleep_for(5s);
+  std::this_thread::sleep_for(1s);
   sm.process_event(stop{});
 
   sm.process_event(reset{});
@@ -70,5 +71,7 @@ int main()
   sm.process_event(stop{});
 
   sm.process_event(turnOff{});
+
+  dump(sm);
   return 0;
 }
