@@ -1,3 +1,5 @@
+# Ignore build directory
+build/
 
 # Ignore vim/YouCompleteMe settings
 .cache/
