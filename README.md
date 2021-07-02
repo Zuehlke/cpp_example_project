@@ -1,3 +1,24 @@
+# cpp_example_project
+
+Work in progress, copied from Jason Turner's cpp_starter_project (old README see below).
+
+## Quickstart - setup Docker and compile:
+
+- Install Docker
+- Clone the project to `~/git/cpp_example_project` (we mount `~/git` to the Docker container by default)
+
+
+```
+# cd ~/git/cpp_example_project/docker
+# ./build-dev-image.sh
+# ./cppdev-docker
+dev@docker# cd home/dev/git/cpp_example_project
+dev@docker# mkdir build && cd build
+dev@docker# cmake ..
+dev@docker# cmake --build .
+```
+
+
 # cpp_starter_project
 
 [![codecov](https://codecov.io/gh/lefticus/cpp_starter_project/branch/master/graph/badge.svg)](https://codecov.io/gh/lefticus/cpp_starter_project)
