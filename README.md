@@ -1,3 +1,15 @@
+# cpp_example_project
+
+Ongoing project of the Zühlke Germany "Modern C++ Topic Group".
+
+With this project, we want to provide an example and starting point for C++ projects (embedded and otherwise), especially regarding tooling.
+
+The project has initially been forked/copied from [Jason Turner's cpp_starter_project](https://github.com/lefticus/cpp_starter_project).
+
+
+<hr>
+## original README:
+
 # cpp_starter_project
 
 [![codecov](https://codecov.io/gh/lefticus/cpp_starter_project/branch/master/graph/badge.svg)](https://codecov.io/gh/lefticus/cpp_starter_project)
