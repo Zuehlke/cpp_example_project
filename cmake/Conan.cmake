@@ -22,6 +22,8 @@ macro(run_conan)
     fmt/8.0.1
     spdlog/1.9.2
     sml/1.1.4
+    nlohmann_json/3.10.0
+    boost/1.76.0
     OPTIONS
     ${CONAN_EXTRA_OPTIONS}
     gtest:build_gmock=True
