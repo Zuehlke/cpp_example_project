@@ -1,6 +1,7 @@
 #pragma once
+#include "error_handling.h"
 
-template<typename Request> http::response<http::string_body> createResponse(Request &&req, http::status status, const nlohmann::json &jsonResponse)
+template<typename Request> http::response<http::string_body> inline createResponse(Request &&req, http::status status, const nlohmann::json &jsonResponse)
 {
     http::response<http::string_body> res{ status, req.version() };
     res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
@@ -11,18 +12,19 @@ template<typename Request> http::response<http::string_body> createResponse(Requ
     return res;
 }
 
-// Returns a bad request response
-const auto badRequest = [&req](beast::string_view why) {
-    const auto j = nlohmann::json::parse(std::string(why));
-    return createResponse(req, http::status::bad_request, j);
-};
 
 // This function produces an HTTP response for the given
 // request. The type of the response object depends on the
 // contents of the request, so the interface requires the
 // caller to pass a generic lambda for receiving the response.
-template<class Body, class Allocator, class Send> void handleRequest(http::request<Body, http::basic_fields<Allocator>> &&req, Send &&send, std::vector<data::person> &data)
+template<class Body, class Allocator, class Send> inline void handleRequest(http::request<Body, http::basic_fields<Allocator>> &&req, Send &&send, std::vector<data::person> &data)
 {
+    // Returns a bad request response
+    const auto badRequest = [&req](beast::string_view why) {
+        const auto j = nlohmann::json::parse(std::string(why));
+        return createResponse(req, http::status::bad_request, j);
+    };
+
     // Make sure we can handle the method
     switch (req.method())
     {
