@@ -1,5 +1,5 @@
 #pragma once
-#include "helper.h"
+#include "error_handling.h"
 #include "data.h"
 #include "session.h"
 
@@ -7,7 +7,7 @@
 class Listener : public std::enable_shared_from_this<Listener>
 {
   public:
-    Listener(net::io_context &ioc, const tcp::endpoint &endpoint) : m_ioc(ioc), m_acceptor(net::make_strand(ioc))
+    Listener(asio::io_context &ioc, const tcp::endpoint &endpoint) : m_ioc(ioc), m_acceptor(asio::make_strand(ioc))
     {
         beast::error_code ec;
 
@@ -20,7 +20,7 @@ class Listener : public std::enable_shared_from_this<Listener>
         }
 
         // Allow address reuse
-        m_acceptor.set_option(net::socket_base::reuse_address(true), ec);
+        m_acceptor.set_option(asio::socket_base::reuse_address(true), ec);
         if (ec)
         {
             fail(ec, "set_option");
@@ -36,7 +36,7 @@ class Listener : public std::enable_shared_from_this<Listener>
         }
 
         // Start listening for connections
-        m_acceptor.listen(net::socket_base::max_listen_connections, ec);
+        m_acceptor.listen(asio::socket_base::max_listen_connections, ec);
         if (ec)
         {
             fail(ec, "listen");
@@ -45,13 +45,13 @@ class Listener : public std::enable_shared_from_this<Listener>
     }
 
     // Start accepting incoming connections
-    void run() { doAccept(); }
+    void run() { acceptNextConnection(); }
 
   private:
-    void doAccept()
+    void acceptNextConnection()
     {
         // The new connection gets its own strand
-        m_acceptor.async_accept(net::make_strand(m_ioc), beast::bind_front_handler(&Listener::onAccept, shared_from_this()));
+        m_acceptor.async_accept(asio::make_strand(m_ioc), beast::bind_front_handler(&Listener::onAccept, shared_from_this()));
     }
 
     void onAccept(beast::error_code ec, tcp::socket socket)
@@ -67,10 +67,10 @@ class Listener : public std::enable_shared_from_this<Listener>
         }
 
         // Accept another connection
-        doAccept();
+        acceptNextConnection();
     }
 
-    net::io_context &m_ioc;
+    asio::io_context &m_ioc;
     tcp::acceptor m_acceptor;
     std::vector<data::person> m_persons;
 };

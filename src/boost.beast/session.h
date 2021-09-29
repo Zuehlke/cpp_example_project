@@ -1,5 +1,5 @@
 #pragma once
-#include "helper.h"
+#include "error_handling.h"
 #include "request.h"
 
 // Handles an HTTP server connection
@@ -16,7 +16,7 @@ class Session : public std::enable_shared_from_this<Session>
         // on the I/O objects in this session. Although not strictly necessary
         // for single-threaded contexts, this example code is written to be
         // thread-safe by default.
-        net::dispatch(m_stream.get_executor(), beast::bind_front_handler(&Session::doRead, shared_from_this()));
+        asio::dispatch(m_stream.get_executor(), beast::bind_front_handler(&Session::doRead, shared_from_this()));
     }
 
     void doRead()
@@ -85,7 +85,7 @@ class Session : public std::enable_shared_from_this<Session>
 
   private:
     std::vector<data::person> &m_person;
-    // This is the C++11 equivalent of a generic lambda.
+
     // The function object is used to send an HTTP message.
     struct sendLambda
     {

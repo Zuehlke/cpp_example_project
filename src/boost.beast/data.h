@@ -1,5 +1,6 @@
 #pragma once
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace data {
 // a simple struct to model a person
@@ -20,5 +21,4 @@ inline void from_json(const nlohmann::json &j, person &p)
     j.at("age").get_to(p.age);
     j.at("id").get_to(p.id);
 }
-
 }// namespace data
