@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <memory>
-#include <string>
 #include <thread>
 #include <vector>
 #include "listener.h"

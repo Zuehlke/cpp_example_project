@@ -110,7 +110,6 @@ class Session : public std::enable_shared_from_this<Session>
       private:
         Session &m_self;
     };
-
     beast::tcp_stream m_stream;
     beast::flat_buffer m_buffer;
     http::request<http::string_body> m_req;
