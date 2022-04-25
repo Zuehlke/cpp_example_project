@@ -6,10 +6,14 @@
 #include <boost/asio/strand.hpp>
 #include <fmt/format.h>
 
-namespace beast = boost::beast;// from <boost/beast.hpp>
-namespace http = beast::http;// from <boost/beast/http.hpp>
-namespace asio = boost::asio;// from <boost/asio.hpp>
-using tcp = boost::asio::ip::tcp;// from <boost/asio/ip/tcp.hpp>
+// from <boost/beast.hpp>
+namespace beast = boost::beast;
+// from <boost/beast/http.hpp>
+namespace http = beast::http;
+// from <boost/asio.hpp>
+namespace asio = boost::asio;
+// from <boost/asio/ip/tcp.hpp>
+using tcp = boost::asio::ip::tcp;
 
 
 inline void fail(beast::error_code ec, char const *what) { fmt::format("FAILED {0}: {1}", what, ec.message()); }
