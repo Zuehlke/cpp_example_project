@@ -1,10 +1,18 @@
 OPTION(CPP_STARTER_USE_SML "Enable compilation of SML sample" OFF)
+OPTION(CPP_STARTER_USE_BOOST_BEAST "Enable compilation of boost beast sample" OFF)
 
-# Nana
+# SML
 IF(CPP_STARTER_USE_SML)
     MESSAGE("Using SML")
     ADD_SUBDIRECTORY(sml)
 ENDIF()
+
+# Boost Beast
+IF(CPP_STARTER_USE_BOOST_BEAST)
+    MESSAGE("Using Boost Beast")
+    ADD_SUBDIRECTORY(boost.beast)
+ENDIF()
+
 
 # Generic test that uses conan libs
 ADD_EXECUTABLE(intro main.cpp)
