@@ -10,14 +10,14 @@ macro(run_conan)
   conan_cmake_run(
     REQUIRES
     ${CONAN_EXTRA_REQUIRES}
-    catch2/2.13.7
+    catch2/2.13.9
     gtest/cci.20210126
     docopt.cpp/0.6.3
-    fmt/8.0.1
-    spdlog/1.9.2
-    sml/1.1.4
-    nlohmann_json/3.10.0
-    boost/1.76.0
+    fmt/8.1.1
+    spdlog/1.10.0
+    sml/1.1.5
+    nlohmann_json/3.10.5
+    boost/1.78.0
     OPTIONS
     ${CONAN_EXTRA_OPTIONS}
     gtest:build_gmock=True
