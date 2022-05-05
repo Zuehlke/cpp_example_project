@@ -25,13 +25,11 @@ int main()
 
   CROW_ROUTE(app, "/json")
   ([] {
-    crow::json::wvalue returnValue({ { "message", "Hello, World!" } });
-    returnValue["message2"] = "Hello, World.. Again!";
-    return returnValue;
+    return crow::json::wvalue({ { "message", "Hello, World!" }, {"message2", "Hello, World.. Again!"} });
   });
 
   CROW_ROUTE(app, "/custom")
-  ([] {
+  ([]() {
     return a();
   });
 
