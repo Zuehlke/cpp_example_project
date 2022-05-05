@@ -3,6 +3,7 @@
 
 #include <spdlog/spdlog.h>
 #include <docopt/docopt.h>
+#include <include/version.hpp>
 
 static constexpr auto USAGE =
   R"(Naval Fate.
@@ -24,6 +25,8 @@ static constexpr auto USAGE =
 
 int main(int argc, const char **argv)
 {
+  fmt::print("Version\nMajor {}\nMinor {}\nPatch {}\nGit Hash {}\n", Version::Major, Version::Minor, Version::Patch, Version::GitHash);
+
   std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
     { std::next(argv), std::next(argv, argc) },
     true,// show help if requested
