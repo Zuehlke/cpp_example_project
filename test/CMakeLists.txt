@@ -1,2 +1,2 @@
-add_subdirectory(catch2)
-add_subdirectory(gtest)
+ADD_SUBDIRECTORY(catch2)
+ADD_SUBDIRECTORY(gtest)
