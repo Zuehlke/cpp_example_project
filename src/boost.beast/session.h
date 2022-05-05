@@ -37,15 +37,9 @@ class Session : public std::enable_shared_from_this<Session>
         boost::ignore_unused(bytes_transferred);
 
         // This means they closed the connection
-        if (ec == http::error::end_of_stream)
-        {
-            return doClose();
-        }
+        if (ec == http::error::end_of_stream) { return doClose(); }
 
-        if (ec)
-        {
-            return fail(ec, "read");
-        }
+        if (ec) { return fail(ec, "read"); }
 
         // Send the response
         handleRequest(std::move(m_req), m_lambda, m_person);
@@ -55,13 +49,9 @@ class Session : public std::enable_shared_from_this<Session>
     {
         boost::ignore_unused(bytes_transferred);
 
-        if (ec)
-        {
-            return fail(ec, "write");
-        }
+        if (ec) { return fail(ec, "write"); }
 
-        if (close)
-        {
+        if (close) {
             // This means we should close the connection, usually because
             // the response indicated the "Connection: close" semantic.
             return doClose();
