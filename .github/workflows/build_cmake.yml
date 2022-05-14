@@ -65,7 +65,7 @@ jobs:
       # We need to source the profile file to make sure conan is in PATH
       run: |
         source ~/.profile
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCPP_STARTER_USE_SML=ON -DCPP_STARTER_USE_BOOST_BEAST=ON -DCPP_STARTER_USE_CROW=ON
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCPP_STARTER_USE_SML=ON -DCPP_STARTER_USE_BOOST_BEAST=ON -DCPP_STARTER_USE_CROW=ON -DCPP_STARTER_USE_CPPZMQ_PROTO=ON
 
     - name: Build
       working-directory: ${{runner.workspace}}/build

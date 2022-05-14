@@ -1,6 +1,7 @@
 OPTION(CPP_STARTER_USE_SML "Enable compilation of SML sample" OFF)
 OPTION(CPP_STARTER_USE_BOOST_BEAST "Enable compilation of boost beast sample" OFF)
 OPTION(CPP_STARTER_USE_CROW "Enable compilation of crow sample" OFF)
+OPTION(CPP_STARTER_USE_CPPZMQ_PROTO "Enable compilation of protobuf and cppzmq sample" OFF)
 
 # SML
 IF(CPP_STARTER_USE_SML)
@@ -20,6 +21,11 @@ IF(CPP_STARTER_USE_CROW)
     ADD_SUBDIRECTORY(crow)
 ENDIF()
 
+# CPPZMQ & Protobuf
+IF(CPP_STARTER_USE_CPPZMQ_PROTO)
+    MESSAGE("Using CPPZMQ & Protobuf")
+    ADD_SUBDIRECTORY(protobuf.cppzmq)
+ENDIF()
 
 # Generic test that uses conan libs
 ADD_EXECUTABLE(intro main.cpp)
