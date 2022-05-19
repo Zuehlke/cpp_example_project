@@ -30,3 +30,5 @@ TARGET_LINK_LIBRARIES(
         CONAN_PKG::docopt.cpp
         CONAN_PKG::fmt
         CONAN_PKG::spdlog)
+
+TARGET_INCLUDE_DIRECTORIES(intro PRIVATE ${CMAKE_BINARY_DIR}/generated)
