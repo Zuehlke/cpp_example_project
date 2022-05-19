@@ -3,7 +3,7 @@
 
 #include <spdlog/spdlog.h>
 #include <docopt/docopt.h>
-#include <include/version.hpp>
+#include "include/version.hpp"
 
 static constexpr auto USAGE =
   R"(Naval Fate.
