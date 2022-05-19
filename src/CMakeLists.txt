@@ -1,5 +1,6 @@
 OPTION(CPP_STARTER_USE_SML "Enable compilation of SML sample" OFF)
 OPTION(CPP_STARTER_USE_BOOST_BEAST "Enable compilation of boost beast sample" OFF)
+OPTION(CPP_STARTER_USE_CROW "Enable compilation of crow sample" OFF)
 
 # SML
 IF(CPP_STARTER_USE_SML)
@@ -13,6 +14,12 @@ IF(CPP_STARTER_USE_BOOST_BEAST)
     ADD_SUBDIRECTORY(boost.beast)
 ENDIF()
 
+# Crow
+IF(CPP_STARTER_USE_CROW)
+    MESSAGE("Using Crow")
+    ADD_SUBDIRECTORY(crow)
+ENDIF()
+
 
 # Generic test that uses conan libs
 ADD_EXECUTABLE(intro main.cpp)
@@ -23,4 +30,3 @@ TARGET_LINK_LIBRARIES(
         CONAN_PKG::docopt.cpp
         CONAN_PKG::fmt
         CONAN_PKG::spdlog)
-
