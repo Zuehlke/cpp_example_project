@@ -1,5 +1,6 @@
 OPTION(CPP_STARTER_USE_SML "Enable compilation of SML sample" OFF)
 OPTION(CPP_STARTER_USE_BOOST_BEAST "Enable compilation of boost beast sample" OFF)
+OPTION(CPP_STARTER_USE_CROW "Enable compilation of crow sample" OFF)
 
 # SML
 IF(CPP_STARTER_USE_SML)
@@ -11,6 +12,12 @@ ENDIF()
 IF(CPP_STARTER_USE_BOOST_BEAST)
     MESSAGE("Using Boost Beast")
     ADD_SUBDIRECTORY(boost.beast)
+ENDIF()
+
+# Crow
+IF(CPP_STARTER_USE_CROW)
+    MESSAGE("Using Crow")
+    ADD_SUBDIRECTORY(crow)
 ENDIF()
 
 
