@@ -9,8 +9,6 @@
 #include "states.h"
 #include <boost/sml.hpp>
 #include <chrono>
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/spdlog.h>
 #include <thread>
 
 using namespace std::chrono_literals;

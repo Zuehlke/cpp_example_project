@@ -1,9 +1,9 @@
-#include <functional>
-#include <iostream>
-#include <string>
 #include "include/version.hpp"
 #include <docopt/docopt.h>
+#include <functional>
+#include <iostream>
 #include <spdlog/spdlog.h>
+#include <string>
 
 static constexpr auto USAGE =
   R"(Naval Fate.
@@ -30,14 +30,24 @@ int main(int argc, const char **argv)
     Minor {}
     Patch {}
     Git Hash {}
-)", Version::Major, Version::Minor, Version::Patch, Version::GitHash);
+)",
+      Version::Major,
+      Version::Minor,
+      Version::Patch,
+      Version::GitHash);
 
     std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
       { std::next(argv), std::next(argv, argc) },
       true,// show help if requested
       "Naval Fate 2.0");// version string
 
-    for (auto const &arg : args) { std::cout << arg.first << arg.second << std::endl; }
+    for (auto const &arg : args) {
+        fmt::print(R"(
+{} {}
+)",
+          arg.first,
+          arg.second.asString());
+    }
 
     // Use the default logger (stdout, multi-threaded, colored)
     spdlog::info("Hello, {}!", "World");
