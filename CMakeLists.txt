@@ -1,11 +1,22 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
 
 # Set the project name to your project name, my project isn't very descriptive
-PROJECT(myproject CXX)
+PROJECT(myproject
+        LANGUAGES CXX
+        VERSION 0.0.1)
+
 INCLUDE(cmake/StandardProjectSettings.cmake)
 INCLUDE(cmake/PreventInSourceBuilds.cmake)
-
 INCLUDE(cmake/CodeFormat.cmake)
+
+EXECUTE_PROCESS(
+        COMMAND git log -1 --format=%h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        OUTPUT_VARIABLE GIT_HASH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+CONFIGURE_FILE("templates/version.hpp.in" "${CMAKE_BINARY_DIR}/generated/include/version.hpp" ESCAPE_QUOTES)
 
 # Link this 'library' to set the c++ standard / compile-time options requested
 ADD_LIBRARY(project_options INTERFACE)

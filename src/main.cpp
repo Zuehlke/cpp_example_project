@@ -1,6 +1,7 @@
 #include <functional>
 #include <iostream>
-
+#include <string>
+#include "include/version.hpp"
 #include <docopt/docopt.h>
 #include <spdlog/spdlog.h>
 
@@ -24,13 +25,19 @@ static constexpr auto USAGE =
 
 int main(int argc, const char **argv)
 {
+    fmt::print(R"(Version
+    Major {}
+    Minor {}
+    Patch {}
+    Git Hash {}
+)", Version::Major, Version::Minor, Version::Patch, Version::GitHash);
+
     std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
       { std::next(argv), std::next(argv, argc) },
       true,// show help if requested
       "Naval Fate 2.0");// version string
 
     for (auto const &arg : args) { std::cout << arg.first << arg.second << std::endl; }
-
 
     // Use the default logger (stdout, multi-threaded, colored)
     spdlog::info("Hello, {}!", "World");
