@@ -1,4 +1,6 @@
 #pragma once
+#include <chrono>
+#include <spdlog/spdlog.h>
 
 std::chrono::time_point<std::chrono::steady_clock> startTime;
 
