@@ -1,8 +1,8 @@
+#include "listener.h"
 #include <cstdlib>
 #include <memory>
 #include <thread>
 #include <vector>
-#include "listener.h"
 
 
 int main()
@@ -20,8 +20,7 @@ int main()
     // Run the I/O service on the requested number of threads
     std::vector<std::thread> v;
     v.reserve(threads);
-    for (auto i = 0; i < threads; i++)
-    {
+    for (auto i = 0; i < threads; i++) {
         v.emplace_back([&ioc] { ioc.run(); });
     }
     ioc.run();

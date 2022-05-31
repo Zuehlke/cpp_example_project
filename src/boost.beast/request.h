@@ -26,20 +26,17 @@ template<class Body, class Allocator, class Send> inline void handleRequest(http
     };
 
     // Make sure we can handle the method
-    switch (req.method())
-    {
+    switch (req.method()) {
     case http::verb::get: {
         // Respond to GET request
         nlohmann::json j = data;
         return send(std::move(createResponse(req, http::status::ok, j)));
     }
     case http::verb::put: {
-        try
-        {
+        try {
             const auto j = nlohmann::json::parse(req.body());
             const data::person d = j;
-            if (d.id > data.size() - 1 || d.id < 0)
-            {
+            if (d.id > data.size() - 1 || d.id < 0) {
                 const nlohmann::json j = R"({"error": "id is larger than data list or negative"})";
                 return send(std::move(createResponse(req, http::status::internal_server_error, j)));
             }
@@ -48,22 +45,17 @@ template<class Body, class Allocator, class Send> inline void handleRequest(http
             temp.address = d.address;
             temp.age = d.age;
             return send(std::move(createResponse(req, http::status::ok, j)));
-        }
-        catch (nlohmann::json::exception &e)
-        {
+        } catch (nlohmann::json::exception &e) {
             return send(std::move(badRequest(e.what())));
         }
     }
     case http::verb::post: {
-        try
-        {
+        try {
             const auto j = nlohmann::json::parse(req.body());
             data.push_back(j);
             data.back().id = static_cast<int>(data.size());
             return send(std::move(createResponse(req, http::status::ok, j)));
-        }
-        catch (nlohmann::json::exception &e)
-        {
+        } catch (nlohmann::json::exception &e) {
             return send(std::move(badRequest(e.what())));
         }
     }
