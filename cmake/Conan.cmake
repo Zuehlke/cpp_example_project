@@ -19,6 +19,8 @@ macro(run_conan)
     nlohmann_json/3.10.5
     boost/1.78.0
     crowcpp-crow/1.0+1
+    cppzmq/4.8.1
+    protobuf/3.20.0
     OPTIONS
     ${CONAN_EXTRA_OPTIONS}
     gtest:build_gmock=True
