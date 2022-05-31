@@ -1,8 +1,8 @@
 #include "event.pb.h"
+#include <include/common.h>
 #include <spdlog/spdlog.h>
 #include <string>
 #include <zmq.hpp>
-#include <include/common.h>
 
 int main()
 {
