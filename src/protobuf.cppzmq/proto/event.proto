@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package own.proto;
+
+message Event {
+    enum PingPong {
+        PING = 0;
+        PONG = 1;
+    }
+
+    string sender = 1;
+    PingPong action = 2;
+    int32 ping_count = 3;
+    int32 pong_count = 4;
+}
