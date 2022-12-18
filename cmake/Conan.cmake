@@ -10,20 +10,22 @@ macro(run_conan)
   conan_cmake_run(
     REQUIRES
     ${CONAN_EXTRA_REQUIRES}
-    catch2/2.13.9
-    gtest/cci.20210126
+    catch2/3.2.1
+    gtest/1.12.1
     docopt.cpp/0.6.3
-    fmt/8.1.1
-    spdlog/1.10.0
-    sml/1.1.5
-    nlohmann_json/3.10.5
-    boost/1.78.0
-    crowcpp-crow/1.0+1
-    cppzmq/4.8.1
-    protobuf/3.20.0
+    fmt/9.1.0
+    spdlog/1.11.0
+    sml/1.1.6
+    nlohmann_json/3.11.2
+    boost/1.80.0
+    crowcpp-crow/1.0+3
+    cppzmq/4.9.0
+    protobuf/3.21.9
     OPTIONS
     ${CONAN_EXTRA_OPTIONS}
     gtest:build_gmock=True
+    SETTINGS
+    compiler.cppstd=${CMAKE_CXX_STANDARD}
     BASIC_SETUP
     CMAKE_TARGETS # individual targets to link to
     BUILD
