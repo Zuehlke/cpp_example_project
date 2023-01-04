@@ -25,7 +25,7 @@ macro(run_conan)
     ${CONAN_EXTRA_OPTIONS}
     gtest:build_gmock=True
     SETTINGS
-    compiler.cppstd=${CMAKE_CXX_STANDARD}
+    compiler.cppstd=${CXX_STANDARD}
     BASIC_SETUP
     CMAKE_TARGETS # individual targets to link to
     BUILD
