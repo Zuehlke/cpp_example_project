@@ -5,7 +5,9 @@ PROJECT(myproject
         LANGUAGES CXX
         VERSION 0.0.1)
 
-SET(CMAKE_CXX_STANDARD 20)
+if(NOT DEFINED CXX_STANDARD)
+    set(CXX_STANDARD 20)
+endif()
 
 INCLUDE(cmake/StandardProjectSettings.cmake)
 INCLUDE(cmake/PreventInSourceBuilds.cmake)
@@ -22,7 +24,7 @@ CONFIGURE_FILE("templates/version.hpp.in" "${CMAKE_BINARY_DIR}/generated/include
 
 # Link this 'library' to set the c++ standard / compile-time options requested
 ADD_LIBRARY(project_options INTERFACE)
-TARGET_COMPILE_FEATURES(project_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
+TARGET_COMPILE_FEATURES(project_options INTERFACE cxx_std_${CXX_STANDARD})
 
 IF(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
     OPTION(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)

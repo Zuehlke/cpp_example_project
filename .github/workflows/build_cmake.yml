@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}
+    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
@@ -26,6 +26,7 @@ jobs:
                     {name: 'Clang 14', cpp: clang++-14, c: clang-14, pkgs: 'clang-14 llvm-14'},
                     {name: 'Clang 15', cpp: clang++-15, c: clang-15, pkgs: 'clang-15 llvm-15'}
                   ]
+        cxx: [14, 17, 20]
 
     steps:
     - uses: actions/checkout@v3
@@ -73,7 +74,7 @@ jobs:
       # We need to source the profile file to make sure conan is in PATH
       run: |
         source ~/.profile
-        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCPP_STARTER_USE_SML=ON -DCPP_STARTER_USE_BOOST_BEAST=ON -DCPP_STARTER_USE_CROW=ON -DCPP_STARTER_USE_CPPZMQ_PROTO=ON
+        cmake $GITHUB_WORKSPACE -DCXX_STANDARD=${{ matrix.cxx }} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCPP_STARTER_USE_SML=ON -DCPP_STARTER_USE_BOOST_BEAST=ON -DCPP_STARTER_USE_CROW=ON -DCPP_STARTER_USE_CPPZMQ_PROTO=ON
 
     - name: Build
       working-directory: ${{runner.workspace}}/build
