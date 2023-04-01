@@ -1,6 +1,9 @@
 # cpp_example_project
 
-Ongoing project of the Zühlke Germany "Modern C++ Topic Group".
+> **Warning**
+> Until now only conan 1.x is supported. Support for conan 2.x will come soon.
+
+Ongoing project of the Zühlke Germany **Modern C++ Topic Group**.
 
 With this project, we want to provide an example and starting point for C++ projects (embedded and otherwise), especially regarding tooling.
 
@@ -14,6 +17,7 @@ The project has initially been forked/copied from [Jason Turner's cpp_starter_pr
 ## Getting Started
 
 ### Use the Github template
+
 First, click the green `Use this template` button near the top of this page.
 This will take you to Github's ['Generate Repository'](https://github.com/Zuehlke/cpp_example_project/generate) page.
 Fill in a repository name and short description, and click 'Create repository from template'.
@@ -23,364 +27,252 @@ Now you can clone the project locally and get to work!
 
     $ git clone https://github.com/<user>/<your_new_repo>.git
 
-### Remove frameworks you're not going to use
-If you know you're not going to use one or more of the optional gui/graphics
-frameworks (fltk, gtkmm, imgui, etc.), you can remove them with `git rm`:
-
-    $ git rm -r src/<unnecessary_framework>
-
-## Dependencies
-
-Note about install commands:
-- for Windows, we use [choco](https://chocolatey.org/install).
-- for MacOS, we use [brew](https://brew.sh/).
-- In case of an error in cmake, make sure that the dependencies are on the PATH.
-
 ### Necessary Dependencies
-1. A C++ compiler that supports C++17.
+
+A C++ compiler that supports at least C++17.
 See [cppreference.com](https://en.cppreference.com/w/cpp/compiler_support)
 to see which features are supported by each compiler.
 The following compilers should work:
 
   * [gcc 7+](https://gcc.gnu.org/)
-	<details>
-	<summary>Install command</summary>
+    <details>
+    <summary>Install command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			sudo apt install build-essential
+            sudo apt install build-essential
 
-	- Windows:
+    - Windows:
 
-			choco install mingw -y
+            choco install mingw -y
 
-	- MacOS:
+    - MacOS:
 
-			brew install gcc
-	</details>
+            brew install gcc
+    </details>
 
   * [clang 6+](https://clang.llvm.org/)
-	<details>
-	<summary>Install command</summary>
+    <details>
+    <summary>Install command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+            bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
-	- Windows:
+    - Windows:
 
-		Visual Studio 2019 ships with LLVM (see the Visual Studio section). However, to install LLVM separately:
+        Visual Studio 2019 ships with LLVM (see the Visual Studio section). However, to install LLVM separately:
 
-			choco install llvm -y
+            choco install llvm -y
 
-		llvm-utils for using external LLVM with Visual Studio generator:
+        llvm-utils for using external LLVM with Visual Studio generator:
 
-			git clone https://github.com/zufuliu/llvm-utils.git
-			cd llvm-utils/VS2017
-			.\install.bat
+            git clone https://github.com/zufuliu/llvm-utils.git
+            cd llvm-utils/VS2017
+            .\install.bat
 
-	- MacOS:
+    - MacOS:
 
-			brew install llvm
-	</details>
+            brew install llvm
+    </details>
 
   * [Visual Studio 2019 or higher](https://visualstudio.microsoft.com/)
-	<details>
-	<summary>Install command + Environment setup</summary>
+    <details>
+    <summary>Install command + Environment setup</summary>
 
-	On Windows, you need to install Visual Studio 2019 because of the SDK and libraries that ship with it.
+    On Windows, you need to install Visual Studio 2019 because of the SDK and libraries that ship with it.
 
-  	Visual Studio IDE - 2019 Community (installs Clang too):
+      Visual Studio IDE - 2019 Community (installs Clang too):
 
-  	  	choco install -y visualstudio2019community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
+            choco install -y visualstudio2019community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
 
-	Put MSVC compiler, Clang compiler, and vcvarsall.bat on the path:
+    Put MSVC compiler, Clang compiler, and vcvarsall.bat on the path:
 
-			choco install vswhere -y
-			refreshenv
+            choco install vswhere -y
+            refreshenv
 
-			# change to x86 for 32bit
-			$clpath = vswhere -products * -latest -prerelease -find **/Hostx64/x64/*
-			$clangpath = vswhere -products * -latest -prerelease -find **/Llvm/bin/*
-			$vcvarsallpath =  vswhere -products * -latest -prerelease -find **/Auxiliary/Build/*
+            # change to x86 for 32bit
+            $clpath = vswhere -products * -latest -prerelease -find **/Hostx64/x64/*
+            $clangpath = vswhere -products * -latest -prerelease -find **/Llvm/bin/*
+            $vcvarsallpath =  vswhere -products * -latest -prerelease -find **/Auxiliary/Build/*
 
-			$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
-			[Environment]::SetEnvironmentVariable("Path", $path + ";$clpath" + ";$clangpath" + ";$vcvarsallpath", "User")
-			refreshenv
+            $path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
+            [Environment]::SetEnvironmentVariable("Path", $path + ";$clpath" + ";$clangpath" + ";$vcvarsallpath", "User")
+            refreshenv
 
-	</details>
+    </details>
 
+  * [Conan](https://conan.io/)
+    <details>
+    <summary>Install Command</summary>
 
-2. [Conan](https://conan.io/)
-	<details>
-	<summary>Install Command</summary>
+    - Via pip - https://docs.conan.io/en/latest/installation.html#install-with-pip-recommended
 
-	- Via pip - https://docs.conan.io/en/latest/installation.html#install-with-pip-recommended
+            pip install --user conan
 
-			pip install --user conan
+    - Windows:
 
-	- Windows:
+            choco install conan -y
 
-			choco install conan -y
+    - MacOS:
 
-	- MacOS:
+            brew install conan
 
-			brew install conan
+    </details>
 
-	</details>
+  * [CMake 3.21+](https://cmake.org/) 
+   
+    This repository uses [CMakePresets](https://cmake.org/cmake/help/latest/guide/user-interaction/index.html#presets).
+    <details>
+    <summary>Install Command</summary>
 
-3. [CMake 3.15+](https://cmake.org/)
-	<details>
-	<summary>Install Command</summary>
+    - Debian/Ubuntu:
 
-	- Debian/Ubuntu:
+            sudo apt-get install cmake
 
-			sudo apt-get install cmake
+    - Windows:
 
-	- Windows:
+            choco install cmake -y
 
-			choco install cmake -y
+    - MacOS:
 
-	- MacOS:
+            brew install cmake
 
-			brew install cmake
-
-	</details>
+    </details>
 
 ### Optional Dependencies
 #### C++ Tools
   * [Doxygen](http://doxygen.nl/)
-	<details>
-	<summary>Install Command</summary>
+    <details>
+    <summary>Install Command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			sudo apt-get install doxygen
-			sudo apt-get install graphviz
+            sudo apt-get install doxygen
+            sudo apt-get install graphviz
 
-	- Windows:
+    - Windows:
 
-			choco install doxygen.install -y
-			choco install graphviz -y
+            choco install doxygen.install -y
+            choco install graphviz -y
 
-	- MacOS:
+    - MacOS:
 
-			brew install doxygen
-	 		brew install graphviz
+            brew install doxygen
+            brew install graphviz
 
-	</details>
+    </details>
 
 
   * [ccache](https://ccache.dev/)
-	<details>
-	<summary>Install Command</summary>
+    <details>
+    <summary>Install Command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			sudo apt-get install ccache
+            sudo apt-get install ccache
 
-	- Windows:
+    - Windows:
 
-			choco install ccache -y
+            choco install ccache -y
 
-	- MacOS:
+    - MacOS:
 
-			brew install ccache
+            brew install ccache
 
-	</details>
+    </details>
 
 
   * [Cppcheck](http://cppcheck.sourceforge.net/)
-	<details>
-	<summary>Install Command</summary>
+    <details>
+    <summary>Install Command</summary>
 
-	- Debian/Ubuntu:
+    - Debian/Ubuntu:
 
-			sudo apt-get install cppcheck
+            sudo apt-get install cppcheck
 
-	- Windows:
+    - Windows:
 
-			choco install cppcheck -y
+            choco install cppcheck -y
 
-	- MacOS:
+    - MacOS:
 
-			brew install cppcheck
+            brew install cppcheck
 
-	</details>
+    </details>
 
 
   * [include-what-you-use](https://include-what-you-use.org/)
-	<details>
-	<summary>Install Command</summary>
+    <details>
+    <summary>Install Command</summary>
 
-	Follow instructions here:
-	https://github.com/include-what-you-use/include-what-you-use#how-to-install
-	</details>
+    Follow instructions here:
+    https://github.com/include-what-you-use/include-what-you-use#how-to-install
+    </details>
 
 ## Build Instructions
 
-### Build directory
-Make a build directory:
-```
-mkdir build
-```
-### Specify the compiler using environment variables
+All defined presets have the following scheme:
 
-By default (if you don't set environment variables `CC` and `CXX`), the system default compiler will be used.
-
-Conan and CMake use the environment variables CC and CXX to decide which compiler to use. So to avoid the conflict issues only specify the compilers using these variables.
-
-CMake will detect which compiler was used to build each of the Conan targets. If you build all of your Conan targets with one compiler, and then build your CMake targets with a different compiler, the project may fail to build.
-
-<details>
-<summary>Commands for setting the compilers </summary>
-
-- Debian/Ubuntu/MacOS:
-
-	Set your desired compiler (`clang`, `gcc`, etc):
-
-	- Temporarily (only for the current shell)
-
-		Run one of the followings in the terminal:
-
-		- clang
-
-				CC=clang CXX=clang++
-
-		- gcc
-
-				CC=gcc CXX=g++
-
-	- Permanent:
-
-		Open `~/.bashrc` using your text editor:
-
-			gedit ~/.bashrc
-
-		Add `CC` and `CXX` to point to the compilers:
-
-			export CC=clang
-			export CXX=clang++
-
-		Save and close the file.
-
-- Windows:
-
-	- Permanent:
-
-		Run one of the followings in PowerShell:
-
-		- Visual Studio generator and compiler (cl)
-
-				[Environment]::SetEnvironmentVariable("CC", "cl.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "cl.exe", "User")
-				refreshenv
-
-		  Set the architecture using [vsvarsall](https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=vs-2019#vcvarsall-syntax):
-
-				vsvarsall.bat x64
-
-		- clang
-
-				[Environment]::SetEnvironmentVariable("CC", "clang.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "clang++.exe", "User")
-				refreshenv
-
-		- gcc
-
-				[Environment]::SetEnvironmentVariable("CC", "gcc.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "g++.exe", "User")
-				refreshenv
-
-
-  - Temporarily (only for the current shell):
-
-			$Env:CC="clang.exe"
-			$Env:CXX="clang++.exe"
-
-</details>
+| Preset stage  | scheme                    | description                                                              |
+|---------------|---------------------------|--------------------------------------------------------------------------|
+| build         | **build-**\<PRESET_NAME\> | This stage is used for compiling the project                             |
+| configuration | \<PRESET_NAME\>           | This stage is used for configure the project with defined compiler setup |
+| test          | **test-**\<PRESET_NAME\>  | This stage is used to run all test registered for ctest                  |
 
 ### Configure your build
 
 To configure the project and write makefiles, you could use `cmake` with a bunch of command line options.
 The easier option is to run cmake interactively:
 
-#### **Configure via cmake-gui**:
+#### **Configure via cmake preset**:
 
-1) Open cmake-gui from the project directory:
-```
-cmake-gui .
-```
-2) Set the build directory:
+Check the preset which can be applied to your build system by typing:
 
-![build_dir](https://user-images.githubusercontent.com/16418197/82524586-fa48e380-9af4-11ea-8514-4e18a063d8eb.jpg)
+    cmake --list-presets
 
-3) Configure the generator:
+The output looks like this:
 
-In cmake-gui, from the upper menu select `Tools/Configure`.
+    Available configure presets:
 
-**Warning**: if you have set `CC` and `CXX` always choose the `use default native compilers` option. This picks `CC` and `CXX`. Don't change the compiler at this stage!
+    "unixlike-gcc-10-debug"       - GCC 10 Debug
+    "unixlike-gcc-10-release"     - GCC 10 Release
+    "unixlike-gcc-11-debug"       - GCC 11 Debug
+    "unixlike-gcc-11-release"     - GCC 11 Release
+    "unixlike-gcc-12-debug"       - GCC 12 Debug
+    "unixlike-gcc-12-release"     - GCC 12 Release
+    "unixlike-clang-12-debug"     - Clang 12 Debug
+    "unixlike-clang-12-release"   - Clang 12 Release
+    "unixlike-clang-13-debug"     - Clang 13 Debug
+    "unixlike-clang-13-release"   - Clang 13 Release
+    "unixlike-clang-14-debug"     - Clang 14 Debug
+    "unixlike-clang-14-release"   - Clang 14 Release
+    "unixlike-clang-15-debug"     - Clang 15 Debug
+    "unixlike-clang-15-release"   - Clang 15 Release
 
-<details>
-<summary>Windows - MinGW Makefiles</summary>
+Choose a configuration which is suitable and use following command for example.
 
-Choose MinGW Makefiles as the generator:
-
-<img src="https://user-images.githubusercontent.com/16418197/82769479-616ade80-9dfa-11ea-899e-3a8c31d43032.png" alt="mingw">
-
-</details>
-
-<details>
-<summary>Windows - Visual Studio generator and compiler</summary>
-
-You should have already set `C` and `CXX` to `cl.exe`.
-
-Choose "Visual Studio 16 2019" as the generator:
-
-<img src="https://user-images.githubusercontent.com/16418197/82524696-32502680-9af5-11ea-9697-a42000e900a6.jpg" alt="default_vs">
-
-</details>
-
-<details>
-
-<summary>Windows - Visual Studio generator and Clang Compiler</summary>
-
-You should have already set `C` and `CXX` to `clang.exe` and `clang++.exe`.
-
-Choose "Visual Studio 16 2019" as the generator. To tell Visual studio to use `clang-cl.exe`:
-- If you use the LLVM that is shipped with Visual Studio: write `ClangCl` under "optional toolset to use".
-
-<img src="https://user-images.githubusercontent.com/16418197/82781142-ae60ac00-9e1e-11ea-8c77-222b005a8f7e.png" alt="visual_studio">
-
-- If you use an external LLVM: write [`LLVM_v142`](https://github.com/zufuliu/llvm-utils#llvm-for-visual-studio-2017-and-2019)
- under "optional toolset to use".
-
-<img src="https://user-images.githubusercontent.com/16418197/82769558-b3136900-9dfa-11ea-9f73-02ab8f9b0ca4.png" alt="visual_studio">
-
-</details>
-<br/>
-
-4) Choose the Cmake options and then generate:
-
-![generate](https://user-images.githubusercontent.com/16418197/82781591-c97feb80-9e1f-11ea-86c8-f2748b96f516.png)
-
-#### **Configure via ccmake**:
-with the Cmake Curses Dialog Command Line tool:
-
-    ccmake -S . -B ./build
-
-Once `ccmake` has finished setting up, press 'c' to configure the project,
-press 'g' to generate, and 'q' to quit.
+    cmake --preset unixlike-clang-15-debug
 
 ### Build
 Once you have selected all the options you would like to use, you can build the
 project (all targets):
 
-    cmake --build ./build
+    cmake --preset <PRESET_NAME>
 
-For Visual Studio, give the build configuration (Release, RelWithDeb, Debug, etc) like the following:
+For example:
+    
+    cmake --preset build-unixlike-clang-15-debug
 
-    cmake --build ./build -- /p:configuration=Release
+### Test
+Run all test using preset and ctest:
+
+    cmake --preset <PRESET_NAME>
+
+For example:
+
+    cmake --preset test-unixlike-clang-15-debug
+
 
 ## Troubleshooting
 
@@ -401,10 +293,8 @@ clearing your Conan cache:
 
     $ conan remove -f '*'
 
-The next time you run `cmake` or `cmake --build`, your Conan dependencies will
-be rebuilt. If you aren't using your system's default compiler, don't forget to
-set the CC, CXX, CMAKE_C_COMPILER, and CMAKE_CXX_COMPILER variables, as
-described in the 'Build using an alternate compiler' section above.
+The next time you run `cmake`, your Conan dependencies will
+be rebuilt.
 
 ### Identifying misconfiguration of Conan dependencies
 
@@ -412,7 +302,7 @@ If you have a dependency 'A' that requires a specific version of another
 dependency 'B', and your project is trying to use the wrong version of
 dependency 'B', Conan will produce warnings about this configuration error
 when you run CMake. These warnings can easily get lost between a couple
-hundred or thousand lines of output, depending on the size of your project.
+hundred or a thousand lines of output, depending on the size of your project.
 
 If your project has a Conan configuration error, you can use `conan info` to
 find it. `conan info` displays information about the dependency graph of your
@@ -421,7 +311,7 @@ project, with colorized output in some terminals.
     $ cd build
     $ conan info .
 
-In my terminal, the first couple lines of `conan info`'s output show all of the
+In my terminal, the first couple lines of `conan info`'s output show all the
 project's configuration warnings in a bright yellow font.
 
 For example, the package `spdlog/1.5.0` depends on the package `fmt/6.1.2`.
@@ -438,8 +328,10 @@ earlier version of `fmt`, such as `fmt/6.0.0`, and then run:
 version of `fmt`.
 
 ## Testing
-See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
+
+- See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
+- See [Googletest tutorial](http://google.github.io/googletest/)
 
 ## Fuzz testing
 
-See [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
+- See [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
