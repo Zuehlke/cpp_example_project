@@ -7,8 +7,8 @@ services:
       - apparmor:unconfined
     cap_add:
       - SYS_PTRACE
-    container_name: cpp_docker_env
-    image: cppdevenv:latest
+    container_name: cpp_ci_env
+    image: cpp_ci_env:latest
     environment:
         - TERM=xterm-256color # For a colored Terminal
         - SSH_AUTH_SOCK=/ssh-agent
@@ -18,10 +18,6 @@ services:
         - ${HOME}/.ssh/config:/home/dev/.ssh/config
         - ${HOME}/.gitconfig:/home/dev/.gitconfig
         - ${HOME}/git:/home/dev/git
-    command: /usr/sbin/sshd -D
     user: root
-    network_mode: "bridge"
-    ports:
-      - "2222:22"
     privileged: true
-    hostname: cpp_docker_env
+    hostname: cpp_docker_ci_env
