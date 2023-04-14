@@ -304,6 +304,20 @@
         "CMAKE_CXX_COMPILER": "g++.exe",
         "CMAKE_BUILD_TYPE": "Release"
       }
+    },
+    {
+      "name": "unixlike-clang-15-debug-static-analysis",
+      "displayName": "Clang 15 Debug - Static Analysis",
+      "description": "Target Unix-like OS with the Clang 15 compiler, debug build type",
+      "inherits": "unixlike-clang-15-debug",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-15",
+        "CMAKE_CXX_COMPILER": "clang++-15",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_CPPCHECK": "ON",
+        "ENABLE_CLANG_TIDY": "ON",
+        "ENABLE_INCLUDE_WHAT_YOU_USE": "ON"
+      }
     }
   ],
   "buildPresets": [
@@ -386,6 +400,10 @@
     {
       "name": "build-win32-gcc-x64-mingw-release",
       "configurePreset": "win32-gcc-x64-mingw-release"
+    },
+    {
+      "name": "build-unixlike-clang-15-debug-static-analysis",
+      "configurePreset": "unixlike-clang-15-debug-static-analysis"
     }
   ],
   "testPresets": [
