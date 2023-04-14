@@ -20,11 +20,6 @@ MACRO(RUN_CONAN)
             https://center.conan.io
             INDEX
             0)
-    CONAN_ADD_REMOTE(
-            NAME
-            bincrafters
-            URL
-            https://bincrafters.jfrog.io/artifactory/api/conan/public-conan)
 
     IF(NOT CONAN_EXPORTED)
         # For multi configuration generators, like VS and XCode
