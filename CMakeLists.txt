@@ -1,13 +1,44 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16...3.23)
+
+# strongly encouraged to enable this globally to avoid conflicts between
+# -Wpedantic being enabled and -std=c++20 and -std=gnu++20 for example
+# when compiling with PCH enabled
+SET(CMAKE_CXX_EXTENSIONS OFF)
+
+INCLUDE(cmake/Options.cmake)
 
 # Set the project name to your project name, my project isn't very descriptive
 PROJECT(myproject
         LANGUAGES CXX
         VERSION 0.0.1)
 
-if(NOT DEFINED CXX_STANDARD)
-    set(CXX_STANDARD 20)
-endif()
+IF(NOT DEFINED CXX_STANDARD)
+    SET(CXX_STANDARD 20)
+ENDIF()
+
+SET(CMAKE_CXX_STANDARD ${CXX_STANDARD})
+
+GET_PROPERTY(BUILDING_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+IF(BUILDING_MULTI_CONFIG)
+    IF(NOT CMAKE_BUILD_TYPE)
+        # Make sure that all supported configuration types have their
+        # associated conan packages available. You can reduce this
+        # list to only the configuration types you use, but only if one
+        # is not forced-set on the command line for VS
+        MESSAGE(TRACE "Setting up multi-config build types")
+        SET(CMAKE_CONFIGURATION_TYPES
+            Debug
+            Release
+            RelWithDebInfo
+            MinSizeRel
+            CACHE STRING "Enabled build types" FORCE)
+    ELSE()
+        MESSAGE(TRACE "User chose a specific build type, so we are using that")
+        SET(CMAKE_CONFIGURATION_TYPES
+            ${CMAKE_BUILD_TYPE}
+            CACHE STRING "Enabled build types" FORCE)
+    ENDIF()
+ENDIF()
 
 INCLUDE(cmake/StandardProjectSettings.cmake)
 INCLUDE(cmake/PreventInSourceBuilds.cmake)
@@ -27,7 +58,6 @@ ADD_LIBRARY(project_options INTERFACE)
 TARGET_COMPILE_FEATURES(project_options INTERFACE cxx_std_${CXX_STANDARD})
 
 IF(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-    OPTION(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
     IF(ENABLE_BUILD_WITH_TIME_TRACE)
         TARGET_COMPILE_OPTIONS(project_options INTERFACE -ftime-trace)
     ENDIF()
@@ -54,12 +84,6 @@ ENABLE_DOXYGEN()
 # allow for static analysis options
 INCLUDE(cmake/StaticAnalyzers.cmake)
 
-OPTION(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
-OPTION(ENABLE_TESTING "Enable Test Builds" ON)
-OPTION(ENABLE_FUZZING "Enable Fuzzing Builds" OFF)
-
-# Very basic PCH example
-OPTION(ENABLE_PCH "Enable Precompiled Headers" OFF)
 IF(ENABLE_PCH)
     # This sets a global PCH parameter, each project will build its own PCH, which is a good idea if any #define's change
     #
@@ -72,10 +96,6 @@ IF(ENABLE_PCH)
             <map>
             <utility>)
 ENDIF()
-
-# Set up some extra Conan dependencies based on our needs before loading Conan
-SET(CONAN_EXTRA_REQUIRES "")
-SET(CONAN_EXTRA_OPTIONS "")
 
 INCLUDE(cmake/Conan.cmake)
 RUN_CONAN()

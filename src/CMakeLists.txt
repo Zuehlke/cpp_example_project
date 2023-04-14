@@ -1,8 +1,3 @@
-OPTION(CPP_STARTER_USE_SML "Enable compilation of SML sample" OFF)
-OPTION(CPP_STARTER_USE_BOOST_BEAST "Enable compilation of boost beast sample" OFF)
-OPTION(CPP_STARTER_USE_CROW "Enable compilation of crow sample" OFF)
-OPTION(CPP_STARTER_USE_CPPZMQ_PROTO "Enable compilation of protobuf and cppzmq sample" OFF)
-
 # SML
 IF(CPP_STARTER_USE_SML)
     MESSAGE("Using SML")
