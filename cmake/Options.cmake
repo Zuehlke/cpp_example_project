@@ -1,4 +1,6 @@
-OPTION(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
+IF(NOT MSVC)
+    OPTION(ENABLE_BUILD_WITH_TIME_TRACE "Enable -ftime-trace to generate time tracing .json files on clang" OFF)
+ENDIF()
 
 OPTION(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
 OPTION(ENABLE_TESTING "Enable Test Builds" ON)
