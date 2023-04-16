@@ -1,4 +1,12 @@
 # SML
+IF(CMAKE_CROSSCOMPILING)
+    IF(CPP_STARTER_USE_EMBEDDED_TOOLCHAIN)
+        MESSAGE("Using Embedded Toolchain")
+        ADD_SUBDIRECTORY(embedded)
+    ENDIF()
+    RETURN()
+ENDIF()
+
 IF(CPP_STARTER_USE_SML)
     MESSAGE("Using SML")
     ADD_SUBDIRECTORY(sml)
@@ -21,6 +29,7 @@ IF(CPP_STARTER_USE_CPPZMQ_PROTO)
     MESSAGE("Using CPPZMQ & Protobuf")
     ADD_SUBDIRECTORY(protobuf.cppzmq)
 ENDIF()
+
 
 # Generic test that uses conan libs
 ADD_EXECUTABLE(intro main.cpp)

@@ -66,26 +66,41 @@ MACRO(RUN_CONAN)
                 SET(CONAN_HOST_PROFILE ${ProjectOptions_CONAN_HOST_PROFILE})
             ENDIF()
 
-            # PATH_OR_REFERENCE ${CMAKE_SOURCE_DIR} is used to tell conan to process
-            # the external "conanfile.py" provided with the project
-            # Alternatively a conanfile.txt could be used
-            CONAN_CMAKE_INSTALL(
-                    PATH_OR_REFERENCE
-                    ${CMAKE_SOURCE_DIR}
-                    BUILD
-                    missing
-                    # Pass compile-time configured options into conan
-                    OPTIONS
-                    ${ProjectOptions_CONAN_OPTIONS}
-                    # Pass CMake compilers to Conan
-                    ${CONAN_ENV}
-                    PROFILE_HOST
-                    ${CONAN_HOST_PROFILE}
-                    PROFILE_BUILD
-                    ${CONAN_BUILD_PROFILE}
-                    # Pass either autodetected settings or a conan profile
-                    ${CONAN_SETTINGS}
-                    ${OUTPUT_QUIET})
+            IF(CMAKE_CROSSCOMPILING AND NOT CONAN_ARCHITECTURE)
+                MESSAGE(FATAL_ERROR "The variable CONAN_ARCHITECTURE must be specified for cross-compiling")
+            ENDIF()
+
+            IF(CMAKE_CROSSCOMPILING)
+                CONAN_CMAKE_RUN(
+                        CONANFILE conanfile_embedded.txt
+                        BASIC_SETUP
+                        ARCH ${CONAN_ARCHITECTURE}
+                        ENV CC=${CMAKE_C_COMPILER}
+                        ENV CXX=${CMAKE_CXX_COMPILER}
+                        ENV CFLAGS=${CMAKE_C_FLAGS}
+                        ENV CXXFLAGS=${CMAKE_CXX_FLAGS}
+                        PROFILE_AUTO ALL
+                        BUILD missing
+                )
+            ELSE()
+                CONAN_CMAKE_INSTALL(
+                        PATH_OR_REFERENCE
+                        ${CMAKE_SOURCE_DIR}
+                        BUILD
+                        missing
+                        # Pass compile-time configured options into conan
+                        OPTIONS
+                        ${ProjectOptions_CONAN_OPTIONS}
+                        # Pass CMake compilers to Conan
+                        ${CONAN_ENV}
+                        PROFILE_HOST
+                        ${CONAN_HOST_PROFILE}
+                        PROFILE_BUILD
+                        ${CONAN_BUILD_PROFILE}
+                        # Pass either autodetected settings or a conan profile
+                        ${CONAN_SETTINGS}
+                        ${OUTPUT_QUIET})
+            ENDIF()
         ENDFOREACH()
 
     ENDIF()
