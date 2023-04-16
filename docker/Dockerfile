@@ -35,13 +35,13 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cm
     && rm cmake-${CMAKE_VERSION}-linux-x86_64.sh
 RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
-RUN apt-get -y install --fix-missing clang-format clang-tidy clang-${PATH} llvm-${PATH} llvm-${PATH}-dev libclang-${PATH}-dev \
+RUN apt-get -y install --fix-missing clang-format clang-tidy clang-${CLANG_COMPILER_VERSION} llvm-${CLANG_COMPILER_VERSION} llvm-${CLANG_COMPILER_VERSION}-dev libclang-${CLANG_COMPILER_VERSION}-dev \
     && apt-get autoremove -y && apt-get clean
 
 RUN mkdir iwyu && cd iwyu \
-    && git clone --branch clang_${PATH} https://github.com/include-what-you-use/include-what-you-use.git \
+    && git clone --branch clang_${CLANG_COMPILER_VERSION} https://github.com/include-what-you-use/include-what-you-use.git \
     && mkdir build && cd build \
-    && cmake -G "Ninja" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-${PATH} ../include-what-you-use \
+    && cmake -G "Ninja" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-${CLANG_COMPILER_VERSION} ../include-what-you-use \
     && sudo ninja install \
     && cd ../.. \
     && rm -rf iwyu
