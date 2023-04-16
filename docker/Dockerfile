@@ -5,10 +5,11 @@
 FROM ubuntu:22.10 as cpp-docker-common
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG CLANG_COMPILER_VERSION=15
+ARG CMAKE_VERSION=3.26.3
 ENV PATH="${PATH}:/cmake-3.26.3-linux-x86_64/bin/:"
 
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missing \
-  apturl \
   binutils \
   build-essential \
   bzip2 \
@@ -27,13 +28,23 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missin
   tar \
   valgrind \
   wget
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.26.3/cmake-3.26.3-linux-x86_64.sh  \
-    && chmod +x cmake-3.26.3-linux-x86_64.sh  \
-    && ./cmake-3.26.3-linux-x86_64.sh --include-subdir --skip-license \
-    && rm cmake-3.26.3-linux-x86_64.sh
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh  \
+    && chmod +x cmake-${CMAKE_VERSION}-linux-x86_64.sh  \
+    && ./cmake-${CMAKE_VERSION}-linux-x86_64.sh --include-subdir --skip-license \
+    && rm cmake-${CMAKE_VERSION}-linux-x86_64.sh
 RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
-RUN apt-get -y install clang-format clang-tidy clang-15
-RUN apt-get autoremove -y && apt-get clean
+
+RUN apt-get -y install --fix-missing clang-format clang-tidy clang-${PATH} llvm-${PATH} llvm-${PATH}-dev libclang-${PATH}-dev \
+    && apt-get autoremove -y && apt-get clean
+
+RUN mkdir iwyu && cd iwyu \
+    && git clone --branch clang_${PATH} https://github.com/include-what-you-use/include-what-you-use.git \
+    && mkdir build && cd build \
+    && cmake -G "Ninja" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-${PATH} ../include-what-you-use \
+    && sudo ninja install \
+    && cd ../.. \
+    && rm -rf iwyu
 
 
 # =================================
