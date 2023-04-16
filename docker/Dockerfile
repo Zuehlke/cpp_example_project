@@ -17,6 +17,7 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missin
   ccache \
   doxygen \
   graphviz \
+  git \
   lsb-release \
   ninja-build \
   python3 \
