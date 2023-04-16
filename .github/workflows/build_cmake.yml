@@ -186,4 +186,4 @@ jobs:
 
     - name: Build
       shell: bash
-      run:  cmake --build --preset gcc-arm-${{ matrix.buildtype }}
+      run:  cmake --build --preset build-gcc-arm-${{ matrix.buildtype }}
