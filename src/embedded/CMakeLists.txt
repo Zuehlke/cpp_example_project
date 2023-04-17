@@ -11,6 +11,6 @@ TARGET_LINK_OPTIONS(${TARGET}
                     )
 ADD_CUSTOM_TARGET(${TARGET}.bin ALL
                   DEPENDS ${TARGET}
-                  COMMAND ${CMAKE_OBJCOPY} -Obinary ${TARGET}.elf ${TARGET}.bin
-                  COMMAND ${CMAKE_OBJCOPY} -Oihex ${TARGET}.elf ${TARGET}.hex
+                  COMMAND ${CMAKE_OBJCOPY} -Obinary ${CMAKE_BINARY_DIR}/bin/${TARGET}.elf ${CMAKE_BINARY_DIR}/bin/${TARGET}.bin
+                  COMMAND ${CMAKE_OBJCOPY} -Oihex ${CMAKE_BINARY_DIR}/bin/${TARGET}.elf ${CMAKE_BINARY_DIR}/bin/${TARGET}.hex
                   )
