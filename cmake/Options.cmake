@@ -32,7 +32,7 @@ OPTION(CPP_STARTER_USE_SML "Enable compilation of SML sample" OFF)
 OPTION(CPP_STARTER_USE_BOOST_BEAST "Enable compilation of boost beast sample" OFF)
 OPTION(CPP_STARTER_USE_CROW "Enable compilation of crow sample" OFF)
 OPTION(CPP_STARTER_USE_CPPZMQ_PROTO "Enable compilation of protobuf and cppzmq sample" OFF)
-OPTION(CPP_STARTER_USE_EMBEDDED_TOOLCHAIN "Enable compilation an example cortex m4 project" OFF)
+OPTION(CPP_STARTER_USE_EMBEDDED_TOOLCHAIN "Enable compilation of an example cortex m4 project" OFF)
 
 # Note: by default ENABLE_DEVELOPER_MODE is True
 # This means that all analysis (sanitizers, static analysis)

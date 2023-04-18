@@ -330,7 +330,6 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_SYSTEM_NAME": "Linux",
         "CONAN_ARCHITECTURE": "armv7",
-        "CMAKE_CROSSCOMPILE": "ON",
         "CMAKE_SYSTEM_PROCESSOR": "arm",
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
@@ -347,7 +346,6 @@
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_SYSTEM_NAME": "Linux",
         "CONAN_ARCHITECTURE": "armv7",
-        "CMAKE_CROSSCOMPILE": "ON",
         "CMAKE_SYSTEM_PROCESSOR": "arm",
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
