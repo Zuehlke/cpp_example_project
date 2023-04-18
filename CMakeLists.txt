@@ -103,6 +103,7 @@ RUN_CONAN()
 ADD_SUBDIRECTORY(src)
 
 IF(CMAKE_CROSSCOMPILING)
+    MESSAGE("Test are not built for GCC ARM toolchain!")
     RETURN()
 ENDIF()
 
