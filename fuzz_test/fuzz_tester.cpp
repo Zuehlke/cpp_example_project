@@ -1,14 +1,16 @@
-#include <stdint.h>
-#include <stddef.h>
+#include <cstdint>
+#include <cstddef>
 
-
-// example comes from here: https://github.com/google/fuzzing/blob/master/tutorial/libFuzzer/fuzz_me.cc
-// Documentation can be found here: https://llvm.org/docs/LibFuzzer.html
+/*
+ * example comes from here: https://github.com/google/fuzzing/blob/master/tutorial/libFuzzer/fuzz_me.cc
+ * Documentation can be found here: https://llvm.org/docs/LibFuzzer.html
+ */
 bool FuzzMe(const uint8_t *Data, size_t DataSize) {
     return DataSize >= 3 &&
            Data[0] == 'F' &&
            Data[1] == 'U' &&
            Data[2] == 'Z' &&
+           // the following is on purpose to demonstrate an error
            Data[3] == 'Z';  // :‑<
 }
 
