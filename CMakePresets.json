@@ -54,6 +54,22 @@
       }
     },
     {
+      "name": "common-fuzzing-conf",
+      "hidden": true,
+      "description": "Clang 15 fuzzer test",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_COVERAGE": "ON",
+        "ENABLE_SANITIZER_ADDRESS": "ON",
+        "ENABLE_SANITIZER_LEAK": "ON",
+        "ENABLE_SANITIZER_UNDEFINED_BEHAVIOR": "ON",
+        "ENABLE_SANITIZER_MEMORY": "OFF",
+        "ENABLE_FUZZING": "ON"
+      }
+    },
+    {
       "name": "windows-2019-msvc-debug",
       "generator": "Visual Studio 16 2019",
       "displayName": "Visual Studio 16 2019 Debug",
@@ -352,20 +368,39 @@
       }
     },
     {
+      "name": "clang-12-fuzzing",
+      "description": "Clang 12 fuzzer test",
+      "inherits": "common-fuzzing-conf",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-12",
+        "CMAKE_CXX_COMPILER": "clang++-12"
+      }
+    },
+    {
+      "name": "clang-13-fuzzing",
+      "description": "Clang 13 fuzzer test",
+      "inherits": "common-fuzzing-conf",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-13",
+        "CMAKE_CXX_COMPILER": "clang++-13"
+      }
+    },
+    {
+      "name": "clang-14-fuzzing",
+      "description": "Clang 14 fuzzer test",
+      "inherits": "common-fuzzing-conf",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-14",
+        "CMAKE_CXX_COMPILER": "clang++-14"
+      }
+    },
+    {
       "name": "clang-15-fuzzing",
       "description": "Clang 15 fuzzer test",
-      "binaryDir": "${sourceDir}/out/build/${presetName}",
-      "installDir": "${sourceDir}/out/install/${presetName}",
+      "inherits": "common-fuzzing-conf",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-15",
-        "CMAKE_CXX_COMPILER": "clang++-15",
-        "CMAKE_BUILD_TYPE": "Debug",
-        "ENABLE_COVERAGE": "ON",
-        "ENABLE_SANITIZER_ADDRESS": "ON",
-        "ENABLE_SANITIZER_LEAK": "ON",
-        "ENABLE_SANITIZER_UNDEFINED_BEHAVIOR": "ON",
-        "ENABLE_SANITIZER_MEMORY": "OFF",
-        "ENABLE_FUZZING": "ON"
+        "CMAKE_CXX_COMPILER": "clang++-15"
       }
     }
   ],
@@ -461,6 +496,18 @@
     {
       "name": "build-gcc-arm-release",
       "configurePreset": "gcc-arm-release"
+    },
+    {
+      "name": "build-clang-12-fuzzing",
+      "configurePreset": "clang-12-fuzzing"
+    },
+    {
+      "name": "build-clang-13-fuzzing",
+      "configurePreset": "clang-13-fuzzing"
+    },
+    {
+      "name": "build-clang-14-fuzzing",
+      "configurePreset": "clang-14-fuzzing"
     },
     {
       "name": "build-clang-15-fuzzing",
@@ -633,6 +680,27 @@
       "inherits": "test-common",
       "configuration": "Release",
       "configurePreset": "win32-gcc-x64-mingw-release"
+    },
+    {
+      "name": "test-clang-12-fuzzing",
+      "displayName": "Strict",
+      "description": "Enable output and stop on failure",
+      "inherits": "test-common",
+      "configurePreset": "clang-12-fuzzing"
+    },
+    {
+      "name": "test-clang-13-fuzzing",
+      "displayName": "Strict",
+      "description": "Enable output and stop on failure",
+      "inherits": "test-common",
+      "configurePreset": "clang-13-fuzzing"
+    },
+    {
+      "name": "test-clang-14-fuzzing",
+      "displayName": "Strict",
+      "description": "Enable output and stop on failure",
+      "inherits": "test-common",
+      "configurePreset": "clang-14-fuzzing"
     },
     {
       "name": "test-clang-15-fuzzing",

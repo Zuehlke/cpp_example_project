@@ -196,7 +196,11 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         buildtype: [debug]
-        compiler: [{name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}]
+        compiler: [ {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
+                    {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
+                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'},
+                    {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}
+                  ]
 
     steps:
     - uses: actions/checkout@v3
