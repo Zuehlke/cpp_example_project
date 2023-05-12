@@ -189,7 +189,7 @@ jobs:
       run:  cmake --build --preset build-gcc-arm-${{ matrix.buildtype }}
 
   linux-fuzzing:
-    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}, ${{ matrix.buildtype }}
+    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, libFuzzer, ${{ matrix.buildtype }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
