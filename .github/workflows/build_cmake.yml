@@ -197,7 +197,6 @@ jobs:
         os: [ubuntu-22.04]
         buildtype: [debug]
         compiler: [{name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}]
-        cxx: [20]
 
     steps:
     - uses: actions/checkout@v3
