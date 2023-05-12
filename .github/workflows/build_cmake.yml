@@ -187,3 +187,51 @@ jobs:
     - name: Build
       shell: bash
       run:  cmake --build --preset build-gcc-arm-${{ matrix.buildtype }}
+
+  linux-fuzzing:
+    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, libFuzzer, ${{ matrix.buildtype }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
+      matrix:
+        os: [ubuntu-22.04]
+        buildtype: [debug]
+        compiler: [ {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
+                    {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
+                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'},
+                    {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}
+                  ]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: |
+          ${{ env.CONAN_USER_HOME }}
+          ~/.cache/pip
+        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+
+    - name: Install conan
+      shell: bash
+      run: |
+        python3 -m pip install --upgrade pip setuptools conan==1.59
+        source ~/.profile
+
+    - name: Install dependencies
+      run:   |
+             sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+             sudo apt update
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }}
+      shell: bash
+
+    - name: Configure via CMake
+      shell: bash
+      run: cmake --preset unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
+
+    - name: Build
+      shell: bash
+      run:  cmake --build --preset build-unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
