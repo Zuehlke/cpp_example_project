@@ -350,6 +350,23 @@
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
       }
+    },
+    {
+      "name": "clang-15-fuzzing",
+      "description": "Clang 15 fuzzer test",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-15",
+        "CMAKE_CXX_COMPILER": "clang++-15",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_COVERAGE": "ON",
+        "ENABLE_SANITIZER_ADDRESS": "ON",
+        "ENABLE_SANITIZER_LEAK": "ON",
+        "ENABLE_SANITIZER_UNDEFINED_BEHAVIOR": "ON",
+        "ENABLE_SANITIZER_MEMORY": "OFF",
+        "ENABLE_FUZZING": "ON"
+      }
     }
   ],
   "buildPresets": [
@@ -444,6 +461,10 @@
     {
       "name": "build-gcc-arm-release",
       "configurePreset": "gcc-arm-release"
+    },
+    {
+      "name": "build-clang-15-fuzzing",
+      "configurePreset": "clang-15-fuzzing"
     }
   ],
   "testPresets": [
@@ -612,6 +633,13 @@
       "inherits": "test-common",
       "configuration": "Release",
       "configurePreset": "win32-gcc-x64-mingw-release"
+    },
+    {
+      "name": "test-clang-15-fuzzing",
+      "displayName": "Strict",
+      "description": "Enable output and stop on failure",
+      "inherits": "test-common",
+      "configurePreset": "clang-15-fuzzing"
     }
   ]
 }

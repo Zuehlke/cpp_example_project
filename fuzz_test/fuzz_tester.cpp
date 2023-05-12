@@ -1,20 +1,18 @@
-#include <fmt/format.h>
-#include <iterator>
-#include <utility>
+#include <stdint.h>
+#include <stddef.h>
 
-[[nodiscard]] auto sum_values(const uint8_t *Data, size_t Size)
-{
-    constexpr auto scale = 1000;
 
-    int value = 0;
-    for (std::size_t offset = 0; offset < Size; ++offset) { value += static_cast<int>(*std::next(Data, static_cast<long>(offset))) * scale; }
-    return value;
+// example comes from here: https://github.com/google/fuzzing/blob/master/tutorial/libFuzzer/fuzz_me.cc
+// Documentation can be found here: https://llvm.org/docs/LibFuzzer.html
+bool FuzzMe(const uint8_t *Data, size_t DataSize) {
+    return DataSize >= 3 &&
+           Data[0] == 'F' &&
+           Data[1] == 'U' &&
+           Data[2] == 'Z' &&
+           Data[3] == 'Z';  // :‑<
 }
 
-// Fuzzer that attempts to invoke undefined behavior for signed integer overflow
-// cppcheck-suppress unusedFunction symbolName=LLVMFuzzerTestOneInput
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size)
-{
-    fmt::print("Value sum: {}, len{}\n", sum_values(Data, Size), Size);
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
+    FuzzMe(Data, Size);
     return 0;
 }
