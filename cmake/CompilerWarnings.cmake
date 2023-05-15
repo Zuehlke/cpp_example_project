@@ -3,7 +3,6 @@
 # https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md
 
 FUNCTION(SET_PROJECT_WARNINGS project_name)
-    OPTION(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" TRUE)
 
     SET(MSVC_WARNINGS
         /W4 # Baseline reasonable warnings
@@ -47,6 +46,7 @@ FUNCTION(SET_PROJECT_WARNINGS project_name)
         -Wnull-dereference # warn if a null dereference is detected
         -Wdouble-promotion # warn if float is implicit promoted to double
         -Wformat=2 # warn on security issues around functions that format output (ie printf)
+        -Wimplicit-fallthrough # warn on statements that fallthrough without an explicit annotation
         )
 
     IF(WARNINGS_AS_ERRORS)
