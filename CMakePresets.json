@@ -402,44 +402,6 @@
         "CMAKE_C_COMPILER": "clang-15",
         "CMAKE_CXX_COMPILER": "clang++-15"
       }
-    },
-    {
-      "name": "win32-gcc-x64-mingw-debug",
-      "displayName": "Windows GCC x64 (MinGW Makefiles) Debug",
-      "description": "Using GCC x64 compiler with Ninja generator on Windows - Debug",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/debug/${presetName}",
-      "installDir": "${sourceDir}/install/${presetName}",
-      "environment": {
-        "PATH": "C:/msys64/mingw64/bin;$penv{PATH}"
-      },
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "gcc.exe",
-        "CMAKE_CXX_COMPILER": "g++.exe",
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CPP_STARTER_USE_SML": "ON",
-        "CPP_STARTER_USE_BOOST_BEAST": "ON",
-        "CPP_STARTER_USE_CROW": "ON"
-      }
-    },
-    {
-      "name": "win32-gcc-x64-mingw-release",
-      "displayName": "Windows GCC x64 (MinGW Makefiles) Release",
-      "description": "Using GCC x64 compiler with Ninja generator on Windows - Release",
-      "generator": "Ninja",
-      "installDir": "${sourceDir}/install/${presetName}",
-      "binaryDir": "${sourceDir}/build/release/${presetName}",
-      "environment": {
-        "PATH": "C:/msys64/mingw64/bin;$penv{PATH}"
-      },
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "gcc.exe",
-        "CMAKE_CXX_COMPILER": "g++.exe",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CPP_STARTER_USE_SML": "ON",
-        "CPP_STARTER_USE_BOOST_BEAST": "ON",
-        "CPP_STARTER_USE_CROW": "ON"
-      }
     }
   ],
   "buildPresets": [
@@ -550,14 +512,6 @@
     {
       "name": "build-clang-15-fuzzing",
       "configurePreset": "clang-15-fuzzing"
-    },
-    {
-      "name": "build-win32-gcc-x64-mingw-debug",
-      "configurePreset": "win32-gcc-x64-mingw-debug"
-    },
-    {
-      "name": "build-win32-gcc-x64-mingw-release",
-      "configurePreset": "win32-gcc-x64-mingw-release"
     }
   ],
   "testPresets": [
@@ -754,16 +708,6 @@
       "description": "Enable output and stop on failure",
       "inherits": "test-common",
       "configurePreset": "clang-15-fuzzing"
-    },
-    {
-      "name": "test-win32-gcc-x64-mingw-debug",
-      "configurePreset": "win32-gcc-x64-mingw-debug",
-      "configuration": "Debug"
-    },
-    {
-      "name": "test-win32-gcc-x64-mingw-release",
-      "configurePreset": "win32-gcc-x64-mingw-release",
-      "configuration": "Release"
     }
   ]
 }
