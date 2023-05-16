@@ -17,23 +17,32 @@ ENDIF()
 # Generate compile_commands.json to make it easier to work with clang based tools
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-IF(ENABLE_IPO)
-    INCLUDE(CheckIPOSupported)
-    CHECK_IPO_SUPPORTED(
-            RESULT
-            result
-            OUTPUT
-            output)
-    IF(result)
-        SET(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
-    ELSE()
-        MESSAGE(SEND_ERROR "IPO is not supported: ${output}")
-    ENDIF()
-ENDIF()
+# Enhance error reporting and compiler messages
 IF(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-    ADD_COMPILE_OPTIONS(-fcolor-diagnostics)
+    IF(ENABLE_BUILD_WITH_TIME_TRACE)
+        TARGET_COMPILE_OPTIONS(project_options INTERFACE -ftime-trace)
+    ENDIF()
+
+    IF(WIN32)
+        # On Windows cuda nvcc uses cl and not clang
+        ADD_COMPILE_OPTIONS($<$<COMPILE_LANGUAGE:C>:-fcolor-diagnostics> $<$<COMPILE_LANGUAGE:CXX>:-fcolor-diagnostics>)
+    ELSE()
+        ADD_COMPILE_OPTIONS(-fcolor-diagnostics)
+    ENDIF()
 ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    ADD_COMPILE_OPTIONS(-fdiagnostics-color=always)
+    IF(WIN32)
+        # On Windows cuda nvcc uses cl and not gcc
+        ADD_COMPILE_OPTIONS($<$<COMPILE_LANGUAGE:C>:-fdiagnostics-color=always>
+                            $<$<COMPILE_LANGUAGE:CXX>:-fdiagnostics-color=always>)
+    ELSE()
+        ADD_COMPILE_OPTIONS(-fdiagnostics-color=always)
+    ENDIF()
+ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND MSVC_VERSION GREATER 1900)
+    ADD_COMPILE_OPTIONS(/diagnostics:column)
 ELSE()
     MESSAGE(STATUS "No colored compiler diagnostic set for '${CMAKE_CXX_COMPILER_ID}' compiler.")
 ENDIF()
+
+# run vcvarsall when msvc is used
+INCLUDE("${CMAKE_CURRENT_LIST_DIR}/VCEnvironment.cmake")
+RUN_VCVARSALL()
