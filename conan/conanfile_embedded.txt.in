@@ -1,10 +1,11 @@
 # Docs at https://docs.conan.io/en/latest/reference/conanfile_txt.html
 [requires]
-fmt/9.1.0
+fmt/10.1.0
 sml/1.1.6
 
 [generators]
-cmake
+CMakeDeps
+CMakeToolchain
 
 [options]
 fmt:header_only=True

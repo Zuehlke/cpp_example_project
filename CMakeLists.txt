@@ -1,5 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 
+INCLUDE(cmake/Conan.cmake)
+
 # strongly encouraged to enable this globally to avoid conflicts between
 # -Wpedantic being enabled and -std=c++20 and -std=gnu++20 for example
 # when compiling with PCH enabled
@@ -61,9 +63,6 @@ INCLUDE(cmake/StaticAnalyzers.cmake)
 # enabled precompiled headers
 INCLUDE(cmake/PrecompiledHeader.cmake)
 ENABLE_PCH()
-
-INCLUDE(cmake/Conan.cmake)
-RUN_CONAN()
 
 ADD_SUBDIRECTORY(src)
 

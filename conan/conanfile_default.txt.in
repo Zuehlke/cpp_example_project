@@ -3,7 +3,7 @@
 catch2/3.3.2
 gtest/1.13.0
 docopt.cpp/0.6.3
-fmt/9.1.0
+fmt/10.1.0
 spdlog/1.11.0
 sml/1.1.6
 nlohmann_json/3.11.2
@@ -13,7 +13,8 @@ cppzmq/4.9.0
 protobuf/3.21.9
 
 [generators]
-cmake
+CMakeDeps
+CMakeToolchain
 
 [options]
 gtest:build_gmock=True

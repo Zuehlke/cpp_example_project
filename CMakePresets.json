@@ -301,7 +301,7 @@
       "name": "win32-gcc-x64-mingw-debug",
       "inherits": "conf-common",
       "environment": {
-        "PATH": "C:/msys64/mingw64/bin;$penv{PATH}"
+        "PATH": "C:/msys64/mingw64/bin;C:/msys64/mingw64/usr/bin;$penv{PATH}"
       },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc.exe",

@@ -79,7 +79,7 @@ WORKDIR /home/${DEV_USER}
 RUN sed -i 's/\\h/docker/;s/01;32m/01;33m/' /home/${DEV_USER}/.bashrc \
   && mkdir /home/${DEV_USER}/git
 
-RUN pip install --user conan==1.59
+RUN pip install --user conan
 
 
 FROM cpp-docker-common as cpp-docker-ci
@@ -96,5 +96,5 @@ RUN groupadd -g 1000 ${CI_USER} && \
 
 COPY ccache.conf /etc/.
 USER ${CI_USER}
-RUN pip install conan==1.59
+RUN pip install conan
 WORKDIR /home/${CI_USER}
