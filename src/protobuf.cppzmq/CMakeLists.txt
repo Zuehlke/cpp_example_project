@@ -11,5 +11,5 @@ ADD_EXECUTABLE(test_cppzmq_proto_client client/main.cpp ${PROTO_SRCS} ${PROTO_HD
 TARGET_INCLUDE_DIRECTORIES(test_cppzmq_proto_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/common)
 TARGET_INCLUDE_DIRECTORIES(test_cppzmq_proto_client PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/common)
 
-TARGET_LINK_LIBRARIES(test_cppzmq_proto_server PRIVATE CONAN_PKG::spdlog CONAN_PKG::cppzmq CONAN_PKG::protobuf)
-TARGET_LINK_LIBRARIES(test_cppzmq_proto_client PRIVATE CONAN_PKG::spdlog CONAN_PKG::cppzmq CONAN_PKG::protobuf)
+TARGET_LINK_LIBRARIES(test_cppzmq_proto_server PRIVATE spdlog::spdlog cppzmq::cppzmq protobuf::protobuf)
+TARGET_LINK_LIBRARIES(test_cppzmq_proto_client PRIVATE spdlog::spdlog cppzmq::cppzmq protobuf::protobuf)

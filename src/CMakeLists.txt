@@ -31,14 +31,17 @@ IF(CPP_STARTER_USE_CPPZMQ_PROTO)
 ENDIF()
 
 
+FIND_PACKAGE(docopt REQUIRED)
+FIND_PACKAGE(spdlog REQUIRED)
+FIND_PACKAGE(fmt REQUIRED)
 # Generic test that uses conan libs
 ADD_EXECUTABLE(intro main.cpp)
 TARGET_LINK_LIBRARIES(
         intro
         PRIVATE project_options
         project_warnings
-        CONAN_PKG::docopt.cpp
-        CONAN_PKG::fmt
-        CONAN_PKG::spdlog)
+        docopt_s
+        fmt::fmt
+        spdlog::spdlog)
 
 TARGET_INCLUDE_DIRECTORIES(intro PRIVATE ${CMAKE_BINARY_DIR}/generated)
