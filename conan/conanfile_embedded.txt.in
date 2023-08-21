@@ -8,4 +8,4 @@ CMakeDeps
 CMakeToolchain
 
 [options]
-fmt:header_only=True
+fmt/*:header_only=True
