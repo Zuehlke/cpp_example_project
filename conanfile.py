@@ -9,11 +9,12 @@ class HelloConan(ConanFile):
 
     def configure(self):
         if self.settings.get_safe('arch') == 'armv7':
-            self.requires = conans.model.requires.Requirements(['fmt/10.1.0'])
+            self.requires = conans.model.requires.Requirements(['fmt/10.1.0', 'sml/1.1.6'])
             self.default_options = {'fmt/*:header_only': True}
         else:
-            self.requires = conans.model.requires.Requirements(['catch2/3.3.2', 'gtest/1.13.0', 'docopt.cpp/0.6.3',
-                                                                'fmt/10.1.0', 'sml/1.1.6'])
+            self.requires = conans.model.requires.Requirements(['catch2/3.4.0', 'gtest/1.14.0', 'docopt.cpp/0.6.3',
+                                                                'fmt/10.1.0', 'spdlog/1.12.0', 'sml/1.1.8', 'nlohmann_json/3.11.2',
+                                                                'boost/1.81.0', 'crowcpp-crow/1.0+5', 'cppzmq/4.9.0', 'protobuf/3.21.12'])
 
     def build(self):
         cmake = CMakeToolchain(self)
