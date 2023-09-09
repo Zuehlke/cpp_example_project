@@ -1,9 +1,3 @@
-SET(CONAN_FILE "conanfile_default.txt.in")
-IF(CMAKE_CROSSCOMPILING)
-    SET(CONAN_FILE "conanfile_embedded.txt.in")
-ENDIF()
-CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/conan/${CONAN_FILE}" "${CMAKE_SOURCE_DIR}/conanfile.txt" ESCAPE_QUOTES)
-
 # Download automatically, you can also just copy the conan.cmake file
 IF(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     MESSAGE(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
