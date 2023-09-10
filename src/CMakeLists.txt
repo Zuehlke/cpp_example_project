@@ -42,6 +42,6 @@ TARGET_LINK_LIBRARIES(
         project_warnings
         docopt_s
         fmt::fmt-header-only
-        spdlog::spdlog)
+        spdlog::spdlog_header_only)
 
 TARGET_INCLUDE_DIRECTORIES(intro PRIVATE ${CMAKE_BINARY_DIR}/generated)
