@@ -13,5 +13,3 @@ conan-cache/
 CMakeUserPresets.json
 
 # misc
-.idea/
-conanfile.txt
