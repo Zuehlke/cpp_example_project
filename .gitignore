@@ -11,5 +11,3 @@ conan-cache/
 
 # User spesific settings
 CMakeUserPresets.json
-
-# misc
