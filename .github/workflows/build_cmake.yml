@@ -60,7 +60,7 @@ jobs:
     - name: Install conan
       shell: bash
       run: |
-        python3 -m pip install --upgrade pip setuptools conan==1.59
+        python3 -m pip install --upgrade pip setuptools conan
         source ~/.profile
 
     - name: Install dependencies
@@ -108,7 +108,7 @@ jobs:
     - name: Install conan
       shell: bash
       run: |
-        python3 -m pip install --upgrade pip setuptools conan==1.59
+        python3 -m pip install --upgrade pip setuptools conan
         source ~/.profile
 
     - name: Install dependencies
@@ -164,7 +164,7 @@ jobs:
     - name: Install conan
       shell: bash
       run: |
-        python3 -m pip install --upgrade pip setuptools conan==1.59
+        python3 -m pip install --upgrade pip setuptools conan
         source ~/.profile
 
     - name: Install dependencies
@@ -218,7 +218,7 @@ jobs:
     - name: Install conan
       shell: bash
       run: |
-        python3 -m pip install --upgrade pip setuptools conan==1.59
+        python3 -m pip install --upgrade pip setuptools conan
         source ~/.profile
 
     - name: Install dependencies

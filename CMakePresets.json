@@ -301,7 +301,7 @@
       "name": "win32-gcc-x64-mingw-debug",
       "inherits": "conf-common",
       "environment": {
-        "PATH": "C:/msys64/mingw64/bin;$penv{PATH}"
+        "PATH": "C:/msys64/mingw64/bin;C:/msys64/mingw64/usr/bin;$penv{PATH}"
       },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc.exe",
@@ -345,8 +345,7 @@
         "CPP_STARTER_USE_EMBEDDED_TOOLCHAIN": "ON",
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_SYSTEM_NAME": "Linux",
-        "CONAN_ARCHITECTURE": "armv7",
-        "CMAKE_SYSTEM_PROCESSOR": "arm",
+        "CMAKE_SYSTEM_PROCESSOR": "armv7l",
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
       }
@@ -361,8 +360,7 @@
         "CPP_STARTER_USE_EMBEDDED_TOOLCHAIN": "ON",
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_SYSTEM_NAME": "Linux",
-        "CONAN_ARCHITECTURE": "armv7",
-        "CMAKE_SYSTEM_PROCESSOR": "arm",
+        "CMAKE_SYSTEM_PROCESSOR": "armv7l",
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
       }
