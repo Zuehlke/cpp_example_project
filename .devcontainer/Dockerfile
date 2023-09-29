@@ -17,7 +17,7 @@ RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
 ENV PATH="${PATH}:/root/.local/bin"
 
 # Install conan
-RUN pipx install conan==1.59 && conan --version
+RUN pipx install conan && conan --version
 
 # By default, anything you run in Docker is done as superuser.
 # Conan runs some install commands as superuser, and will prepend `sudo` to
