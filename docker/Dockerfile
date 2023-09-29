@@ -2,7 +2,7 @@
 # Build and test environment for CI
 # =================================
 
-FROM ubuntu:22.10 as cpp-docker-common
+FROM ubuntu:23.04 as cpp-docker-common
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CLANG_COMPILER_VERSION=15
@@ -20,8 +20,11 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missin
   git \
   lsb-release \
   ninja-build \
+  pipx \
   python3 \
   python3-pip \
+  python3-setuptools \
+  python3-venv \
   shellcheck \
   ssh \
   software-properties-common \
@@ -79,7 +82,7 @@ WORKDIR /home/${DEV_USER}
 RUN sed -i 's/\\h/docker/;s/01;32m/01;33m/' /home/${DEV_USER}/.bashrc \
   && mkdir /home/${DEV_USER}/git
 
-RUN pip install --user conan
+RUN pipx install conan
 
 
 FROM cpp-docker-common as cpp-docker-ci
@@ -96,5 +99,5 @@ RUN groupadd -g 1000 ${CI_USER} && \
 
 COPY ccache.conf /etc/.
 USER ${CI_USER}
-RUN pip install conan
+RUN pipx install conan
 WORKDIR /home/${CI_USER}
