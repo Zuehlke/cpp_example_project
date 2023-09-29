@@ -91,8 +91,8 @@ ARG CI_USER=ci
 ENV PATH="${PATH}:/home/${CI_USER}/.local/bin/"
 
 # Dev user for inside the container
-RUN groupadd -g 1000 ${CI_USER} && \
-  useradd -m -u 1000 -g 1000 -d /home/${CI_USER} -s /bin/bash ${CI_USER} && \
+RUN groupadd -f -g 1000 ${CI_USER} && \
+  useradd --non-unique -m -u 1000 -g 1000 -d /home/${CI_USER} -s /bin/bash ${CI_USER} && \
   usermod -a -G adm,cdrom,sudo,dip,plugdev ${CI_USER} && \
   echo "${CI_USER}:${CI_USER}" | chpasswd && \
   echo "${CI_USER}   ALL=(ALL:ALL) ALL" >> /etc/sudoers
