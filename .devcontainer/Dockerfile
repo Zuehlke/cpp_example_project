@@ -10,13 +10,14 @@ RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y --no-install-recommends \
         software-properties-common wget apt-utils file zip \
         openssh-client gpg-agent socat rsync \
-        make ninja-build git \
-        python3 python3-pip
+        make ninja-build git pipx \
+        python3 python3-pip python3-venv python3-setuptools
+
+# Ensure pipx is in PATH
+ENV PATH="${PATH}:/root/.local/bin"
 
 # Install conan
-RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install conan && \
-    conan --version
+RUN pipx install conan && conan --version
 
 # By default, anything you run in Docker is done as superuser.
 # Conan runs some install commands as superuser, and will prepend `sudo` to
@@ -28,9 +29,9 @@ ENV CONAN_SYSREQUIRES_SUDO 0
 ENV CONAN_SYSREQUIRES_MODE enabled
 
 # User-settable versions:
-# This Dockerfile should support gcc-[10, 11, 12, 13] and clang-[10, 11, 12, 13, 14, 15]
+# This Dockerfile should support gcc-[10, 11, 12] and clang-[10, 11, 12, 13, 14, 15]
 # Earlier versions of clang will require significant modifications to the IWYU section
-ARG GCC_VER="13"
+ARG GCC_VER="12"
 # Add gcc-${GCC_VER}
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
     apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
@@ -61,6 +62,7 @@ RUN update-alternatives --install /usr/bin/clang++ clang++ $(which clang++-${LLV
 
 # Add current cmake/ccmake, from Kitware
 ARG CMAKE_URL="https://apt.kitware.com/ubuntu/"
+# FALLBACK because lunar isn't support yet by kitware
 ARG CMAKE_PKG=${VARIANT}
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null \
         | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
@@ -76,7 +78,7 @@ RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
 # Install optional dependecies
 RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y --no-install-recommends \
-        doxygen graphviz ccache cppcheck
+        doxygen graphviz ccache cppcheck xz-utils
 
 # Install include-what-you-use
 ENV IWYU /home/iwyu
@@ -103,6 +105,11 @@ RUN ln -s $(readlink -f /usr/lib/clang/${LLVM_VER}/include) \
 ## Cleanup cached apt data we don't need anymore
 RUN apt-get autoremove -y && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+## Install ARM GCC toolchain
+RUN wget -O archive.tar.xz "https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz?rev=7bd049b7a3034e64885fa1a71c12f91d&hash=732D909FA8F68C0E1D0D17D08E057619" && \
+    echo 84be93d0f9e96a15addd490b6e237f588c641c8afdf90e7610a628007fc96867 archive.tar.xz > /tmp/archive.sha256 && sha256sum -c /tmp/archive.sha256 && rm /tmp/archive.sha256 && \
+    tar xf archive.tar.xz -C /opt
 
 # Allow the user to set compiler defaults
 ARG USE_CLANG
