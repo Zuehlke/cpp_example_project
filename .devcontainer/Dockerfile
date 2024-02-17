@@ -4,6 +4,8 @@ FROM ubuntu:${VARIANT}
 
 # Restate the variant to use it later on in the llvm and cmake installations
 ARG VARIANT
+ARG CMAKE_VERSION=3.28.3
+ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 # Install necessary packages available from standard repos
 RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
@@ -29,7 +31,7 @@ ENV CONAN_SYSREQUIRES_SUDO 0
 ENV CONAN_SYSREQUIRES_MODE enabled
 
 # User-settable versions:
-# This Dockerfile should support gcc-[10, 11, 12] and clang-[10, 11, 12, 13, 14, 15]
+# This Dockerfile should support gcc-[10, 11, 12, 13] and clang-[10, 11, 12, 13, 14, 15, 16, 17]
 # Earlier versions of clang will require significant modifications to the IWYU section
 ARG GCC_VER="12"
 # Add gcc-${GCC_VER}
@@ -42,7 +44,7 @@ RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
 RUN update-alternatives --install /usr/bin/gcc gcc $(which gcc-${GCC_VER}) 100
 RUN update-alternatives --install /usr/bin/g++ g++ $(which g++-${GCC_VER}) 100
 
-ARG LLVM_VER="15"
+ARG LLVM_VER="17"
 # Add clang-${LLVM_VER}
 ARG LLVM_URL="http://apt.llvm.org/${VARIANT}/"
 ARG LLVM_PKG="llvm-toolchain-${VARIANT}-${LLVM_VER}"
@@ -60,15 +62,11 @@ RUN update-alternatives --install /usr/bin/clang-tidy clang-tidy $(which clang-t
 RUN update-alternatives --install /usr/bin/clang clang $(which clang-${LLVM_VER}) 100
 RUN update-alternatives --install /usr/bin/clang++ clang++ $(which clang++-${LLVM_VER}) 100
 
-# Add current cmake/ccmake, from Kitware
-ARG CMAKE_URL="https://apt.kitware.com/ubuntu/"
-# FALLBACK because lunar isn't support yet by kitware
-ARG CMAKE_PKG=${VARIANT}
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null \
-        | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
-    apt-add-repository -y "deb ${CMAKE_URL} ${CMAKE_PKG} main" && \
-    apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
-    apt-get install -y --no-install-recommends cmake cmake-curses-gui
+# Add install cmake/ccmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh  \
+    && chmod +x cmake-${CMAKE_VERSION}-linux-x86_64.sh  \
+    && ./cmake-${CMAKE_VERSION}-linux-x86_64.sh --include-subdir --skip-license \
+    && rm cmake-${CMAKE_VERSION}-linux-x86_64.sh
 
 # Install editors
 RUN apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
