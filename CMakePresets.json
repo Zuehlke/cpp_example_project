@@ -12,6 +12,9 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
+      "environment": {
+        "NOT_ON_C3I": "1"
+      },
       "cacheVariables": {
         "CPP_STARTER_USE_SML": "ON",
         "CPP_STARTER_USE_BOOST_BEAST": "ON",
