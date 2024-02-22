@@ -83,7 +83,7 @@ RUN mkdir iwyu && cd iwyu \
     && git clone --branch clang_${LLVM_VER} https://github.com/include-what-you-use/include-what-you-use.git \
     && mkdir build && cd build \
     && cmake -G "Ninja" -DCMAKE_PREFIX_PATH=/usr/lib/llvm-${LLVM_VER} ../include-what-you-use \
-    && sudo ninja install \
+    && ninja install \
     && cd ../.. \
     && rm -rf iwyu
 
