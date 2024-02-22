@@ -422,7 +422,8 @@
         "CPP_STARTER_USE_QT": "ON"
       },
       "environment": {
-        "NOT_ON_C3I": "1"
+        "NOT_ON_C3I": "1",
+        "DONT_CONFIGURE_QT": "0"
       }
     }
   ],
