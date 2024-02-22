@@ -27,7 +27,7 @@ IF(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
         # On Windows cuda nvcc uses cl and not clang
         ADD_COMPILE_OPTIONS($<$<COMPILE_LANGUAGE:C>:-fcolor-diagnostics> $<$<COMPILE_LANGUAGE:CXX>:-fcolor-diagnostics>)
     ELSE()
-        ADD_COMPILE_OPTIONS(-fcolor-diagnostics -stdlib=libc++)
+        ADD_COMPILE_OPTIONS(-fcolor-diagnostics)
     ENDIF()
 ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     IF(WIN32)
