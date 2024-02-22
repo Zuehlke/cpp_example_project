@@ -235,3 +235,57 @@ jobs:
     - name: Build
       shell: bash
       run:  cmake --build --preset build-unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
+
+  linux-qt:
+    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
+      matrix:
+        os: [ubuntu-22.04]
+        compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
+        cxx: [20]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: |
+          ${{ env.CONAN_USER_HOME }}
+          ~/.cache/pip
+        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+
+    - name: Install conan
+      shell: bash
+      run: |
+        python3 -m pip install --upgrade pip setuptools conan
+        source ~/.profile
+
+    - name: Install dependencies
+      run:   |
+             sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+             sudo apt update
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} libx11-xcb-dev libfontenc-dev libice-dev libsm-dev
+             libxaw7-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev libxfixes-dev libxi-dev
+             libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev libxpm-dev libxrandr-dev libxrender-dev libxres-dev
+             libxss-dev libxt-dev libxtst-dev libxv-dev libxxf86vm-dev libxcb-render0-dev libxcb-render-util0-dev
+             libxcb-xkb-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev libxcb-shape0-dev
+             libxcb-sync-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-dri3-dev uuid-dev libxcb-cursor-dev
+             libxcb-util-dev libxcb-util0-dev libx11-xcb1 libx11-xcb libx11-dev libgl-dev libgl1-mesa-dev
+      shell: bash
+
+    - name: Configure via CMake
+      shell: bash
+      run: cmake --preset ${{ matrix.compiler.preset }}-qt -DCXX_STANDARD=${{ matrix.cxx }}
+
+    - name: Build
+      shell: bash
+      run:  cmake --build --preset build-${{ matrix.compiler.preset }}-qt
+
+    - name: Test
+      shell: bash
+      run: ctest --preset test-${{ matrix.compiler.preset }}-qt
