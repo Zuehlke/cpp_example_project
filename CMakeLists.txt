@@ -7,11 +7,6 @@ INCLUDE(cmake/Conan.cmake)
 # when compiling with PCH enabled
 SET(CMAKE_CXX_EXTENSIONS OFF)
 
-# temporarily Workaround due to problems in github actions
-IF(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-ENDIF()
-
 INCLUDE(cmake/Options.cmake)
 
 # Set the project name to your project name, my project isn't very descriptive
