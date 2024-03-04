@@ -13,7 +13,7 @@
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
       "environment": {
-        "DONT_CONFIGURE_QT": "1"
+        "CONFIGURE_QT": "0"
       },
       "cacheVariables": {
         "CPP_STARTER_USE_SML": "ON",
@@ -423,7 +423,7 @@
       },
       "environment": {
         "NOT_ON_C3I": "1",
-        "DONT_CONFIGURE_QT": "0"
+        "CONFIGURE_QT": "1"
       }
     }
   ],

@@ -17,15 +17,15 @@ class HelloConan(ConanFile):
             self.requires = conans.model.requires.Requirements(['fmt/10.0.0', 'sml/1.1.6'])
             return
 
-        if os.getenv("DONT_CONFIGURE_QT") == '1':
+        if os.getenv("CONFIGURE_QT") == '1':
+            self.requires = conans.model.requires.Requirements(['catch2/3.4.0', 'docopt.cpp/0.6.3', 'gtest/1.14.0',
+                                                                'qt/6.6.1', 'spdlog/1.12.0'])
+        else:
             requirement = ['catch2/3.4.0', 'gtest/1.14.0', 'docopt.cpp/0.6.3',
                            'spdlog/1.12.0', 'sml/1.1.8', 'nlohmann_json/3.11.2',
                            'boost/1.83.0', 'crowcpp-crow/1.0+5', 'cppzmq/4.9.0',
                            'protobuf/3.21.12']
             self.requires = conans.model.requires.Requirements(requirement)
-        else:
-            self.requires = conans.model.requires.Requirements(['catch2/3.4.0', 'docopt.cpp/0.6.3', 'gtest/1.14.0',
-                                                                'qt/6.6.1', 'spdlog/1.12.0'])
 
     def build(self):
         cmake = CMakeToolchain(self)
