@@ -41,12 +41,63 @@ jobs:
         compiler: [ {name: 'GCC 10', preset: gcc-10, pkgs: 'gcc-10 g++-10 lib32gcc-10-dev gcc-multilib'},
                     {name: 'GCC 11', preset: gcc-11, pkgs: 'gcc-11 g++-11 lib32gcc-11-dev gcc-multilib'},
                     {name: 'GCC 12', preset: gcc-12, pkgs: 'gcc-12 g++-12 lib32gcc-12-dev gcc-multilib'},
-                    {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
-                    {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
-                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'},
                     {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}
                   ]
         cxx: [17, 20]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: |
+          ${{ env.CONAN_USER_HOME }}
+          ~/.cache/pip
+        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+
+    - name: Install conan
+      shell: bash
+      run: |
+        python3 -m pip install --upgrade pip setuptools conan
+        source ~/.profile
+
+    - name: Install dependencies
+      run:   |
+             sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+             sudo apt update
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }}
+      shell: bash
+
+    - name: Configure via CMake
+      shell: bash
+      run: cmake --preset unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }} -DCXX_STANDARD=${{ matrix.cxx }}
+
+    - name: Build
+      shell: bash
+      run:  cmake --build --preset build-unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
+
+    - name: Test
+      shell: bash
+      run: ctest --preset test-unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
+
+  # because of an bug in github actions: https://github.com/actions/runner-images/issues/8659
+  # we use clang 12, clang 13, clang 14 only in C++17 mode
+  linux-clang-smaller-15:
+    name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}, ${{ matrix.buildtype }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
+      matrix:
+        os: [ubuntu-22.04]
+        buildtype: [debug]
+        compiler: [ {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
+                    {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
+                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'}
+                  ]
+        cxx: [17]
 
     steps:
     - uses: actions/checkout@v3
@@ -200,11 +251,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         buildtype: [debug]
-        compiler: [ {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
-                    {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
-                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'},
-                    {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}
-                  ]
+        compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
 
     steps:
     - uses: actions/checkout@v3
@@ -239,3 +286,57 @@ jobs:
     - name: Build
       shell: bash
       run:  cmake --build --preset build-unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
+
+  linux-qt:
+    name: ${{ matrix.os }}, QT ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
+      matrix:
+        os: [ubuntu-22.04]
+        compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
+        cxx: [20]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: |
+          ${{ env.CONAN_USER_HOME }}
+          ~/.cache/pip
+        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+
+    - name: Install conan
+      shell: bash
+      run: |
+        python3 -m pip install --upgrade pip setuptools conan
+        source ~/.profile
+
+    - name: Install dependencies
+      run:   |
+             sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+             sudo apt update
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} libx11-xcb-dev libfontenc-dev libice-dev \
+             libsm-dev libxaw7-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev libxfixes-dev libxi-dev \
+             libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev libxpm-dev libxrandr-dev libxrender-dev libxres-dev \
+             libxss-dev libxt-dev libxtst-dev libxv-dev libxxf86vm-dev libxcb-render0-dev libxcb-render-util0-dev \
+             libxcb-xkb-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev libxcb-shape0-dev \
+             libxcb-sync-dev libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-dri3-dev uuid-dev libxcb-cursor-dev \
+             libxcb-util-dev libxcb-util0-dev libx11-xcb1 libx11-dev libgl-dev libgl1-mesa-dev
+      shell: bash
+
+    - name: Configure via CMake
+      shell: bash
+      run: cmake --preset ${{ matrix.compiler.preset }}-qt -DCXX_STANDARD=${{ matrix.cxx }}
+
+    - name: Build
+      shell: bash
+      run:  cmake --build --preset build-${{ matrix.compiler.preset }}-qt
+
+    - name: Test
+      shell: bash
+      run: ctest --preset test-${{ matrix.compiler.preset }}-qt
