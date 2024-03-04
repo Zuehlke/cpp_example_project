@@ -6,8 +6,8 @@ FROM ubuntu:23.04 as cpp-docker-common
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CLANG_COMPILER_VERSION=15
-ARG CMAKE_VERSION=3.26.3
-ENV PATH="${PATH}:/cmake-3.26.3-linux-x86_64/bin/:"
+ARG CMAKE_VERSION=3.28.3
+ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missing \
   binutils \

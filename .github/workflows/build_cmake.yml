@@ -26,6 +26,10 @@ jobs:
         shell: bash
         run: cd docker && ./build-dev-image.sh
 
+      - name: Build .devcontainer docker image
+        shell: bash
+        run: cd .devcontainer && DOCKER_BUILDKIT=1 docker build -t devcontainer:latest .
+
   linux:
     name: ${{ matrix.os }}, ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}, ${{ matrix.buildtype }}
     runs-on: ${{ matrix.os }}

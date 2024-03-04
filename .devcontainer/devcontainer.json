@@ -6,7 +6,7 @@
     "dockerfile": "Dockerfile",
     // Update 'VARIANT' to pick an Ubuntu OS version. Options: [focal, jammy, lunar]. Default: lunar
     // Update 'GCC_VER' to pick a gcc and g++ version. Options: [10, 11, 12, 13]. Default: 12
-    // Update 'LLVM_VER' to pick clang version. Options: [10, 11, 12, 13, 14, 15]. Default: 15
+    // Update 'LLVM_VER' to pick clang version. Options: [10, 11, 12, 13, 14, 15, 16, 17]. Default: 17
     // Update 'USE_CLANG' to set clang as the default C and C++ compiler. Options: [1, null]. Default null
     // "args": {
     // 	"VARIANT": "focal",
@@ -25,7 +25,7 @@
     "editor.formatOnSave": true
   },
   // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
+  "customizations/vscode/extensions": [
     "ms-vscode.cpptools",
     "ms-vscode.cmake-tools",
     "twxs.cmake",
