@@ -12,6 +12,9 @@
       "hidden": true,
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
+      "environment": {
+        "CONFIGURE_QT": "0"
+      },
       "cacheVariables": {
         "CPP_STARTER_USE_SML": "ON",
         "CPP_STARTER_USE_BOOST_BEAST": "ON",
@@ -299,9 +302,10 @@
     },
     {
       "name": "win32-gcc-x64-mingw-debug",
+      "displayName": "Windows GCC MinGW Debug",
       "inherits": "conf-common",
       "environment": {
-        "PATH": "C:/msys64/mingw64/bin;$penv{PATH}"
+        "PATH": "C:/msys64/mingw64/bin;C:/msys64/mingw64/usr/bin;$penv{PATH}"
       },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "gcc.exe",
@@ -311,6 +315,7 @@
     },
     {
       "name": "win32-gcc-x64-mingw-release",
+      "displayName": "Windows GCC MinGW Release",
       "inherits": "conf-common",
       "environment": {
         "PATH": "C:/msys64/mingw64/bin;$penv{PATH}"
@@ -337,6 +342,7 @@
     },
     {
       "name": "gcc-arm-debug",
+      "displayName": "GCC ARM Debug",
       "generator": "Ninja",
       "toolchainFile": "${sourceDir}/cmake/arm-cortex-gnu/ArmCortexM4Gnu.cmake",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
@@ -345,14 +351,14 @@
         "CPP_STARTER_USE_EMBEDDED_TOOLCHAIN": "ON",
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_SYSTEM_NAME": "Linux",
-        "CONAN_ARCHITECTURE": "armv7",
-        "CMAKE_SYSTEM_PROCESSOR": "arm",
+        "CMAKE_SYSTEM_PROCESSOR": "armv7l",
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
       }
     },
     {
       "name": "gcc-arm-release",
+      "displayName": "GCC ARM Release",
       "generator": "Ninja",
       "toolchainFile": "${sourceDir}/cmake/arm-cortex-gnu/ArmCortexM4Gnu.cmake",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
@@ -361,15 +367,14 @@
         "CPP_STARTER_USE_EMBEDDED_TOOLCHAIN": "ON",
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_SYSTEM_NAME": "Linux",
-        "CONAN_ARCHITECTURE": "armv7",
-        "CMAKE_SYSTEM_PROCESSOR": "arm",
+        "CMAKE_SYSTEM_PROCESSOR": "armv7l",
         "CMAKE_TRY_COMPILE_TARGET_TYPE": "STATIC_LIBRARY",
         "CMAKE_CROSSCOMPILING": "TRUE"
       }
     },
     {
       "name": "clang-12-fuzzing",
-      "description": "Clang 12 fuzzer test",
+      "displayName": "Clang 12 fuzzer test",
       "inherits": "common-fuzzing-conf",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-12",
@@ -378,7 +383,7 @@
     },
     {
       "name": "clang-13-fuzzing",
-      "description": "Clang 13 fuzzer test",
+      "displayName": "Clang 13 fuzzer test",
       "inherits": "common-fuzzing-conf",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-13",
@@ -387,7 +392,7 @@
     },
     {
       "name": "clang-14-fuzzing",
-      "description": "Clang 14 fuzzer test",
+      "displayName": "Clang 14 fuzzer test",
       "inherits": "common-fuzzing-conf",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-14",
@@ -396,122 +401,172 @@
     },
     {
       "name": "clang-15-fuzzing",
-      "description": "Clang 15 fuzzer test",
+      "displayName": "Clang 15 fuzzer test",
       "inherits": "common-fuzzing-conf",
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-15",
         "CMAKE_CXX_COMPILER": "clang++-15"
+      }
+    },
+    {
+      "name": "clang-15-qt",
+      "displayName": "Clang 15 QT",
+      "inherits": "conf-unixlike-common",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-15",
+        "CMAKE_CXX_COMPILER": "clang++-15",
+        "CPP_STARTER_USE_SML": "OFF",
+        "CPP_STARTER_USE_BOOST_BEAST": "OFF",
+        "CPP_STARTER_USE_CROW": "OFF",
+        "CPP_STARTER_USE_CPPZMQ_PROTO": "OFF",
+        "CPP_STARTER_USE_QT": "ON"
+      },
+      "environment": {
+        "NOT_ON_C3I": "1",
+        "CONFIGURE_QT": "1"
       }
     }
   ],
   "buildPresets": [
     {
       "name": "build-windows-2019-msvc-debug",
+      "displayName": "Windows MSVC 2019 Debug",
       "configurePreset": "windows-2019-msvc-debug"
     },
     {
       "name": "build-windows-2019-msvc-release",
+      "displayName": "Windows MSVC 2019 Release",
       "configurePreset": "windows-2019-msvc-release"
     },
     {
       "name": "build-windows-2022-msvc-debug",
+      "displayName": "Windows MSVC 2022 Debug",
       "configurePreset": "windows-2022-msvc-debug"
     },
     {
       "name": "build-windows-2022-msvc-release",
+      "displayName": "Windows MSVC 2022 Release",
       "configurePreset": "windows-2022-msvc-release"
     },
     {
       "name": "build-unixlike-gcc-10-debug",
+      "displayName": "Linux GCC 10 Debug",
       "configurePreset": "unixlike-gcc-10-debug"
     },
     {
       "name": "build-unixlike-gcc-10-release",
+      "displayName": "Linux GCC 10 Release",
       "configurePreset": "unixlike-gcc-10-release"
     },
     {
       "name": "build-unixlike-gcc-11-debug",
+      "displayName": "Linux GCC 11 Debug",
       "configurePreset": "unixlike-gcc-11-debug"
     },
     {
       "name": "build-unixlike-gcc-11-release",
+      "displayName": "Linux GCC 11 Release",
       "configurePreset": "unixlike-gcc-11-release"
     },
     {
       "name": "build-unixlike-gcc-12-debug",
+      "displayName": "Linux GCC 12 Debug",
       "configurePreset": "unixlike-gcc-12-debug"
     },
     {
       "name": "build-unixlike-gcc-12-release",
+      "displayName": "Linux GCC 12 Release",
       "configurePreset": "unixlike-gcc-12-release"
     },
     {
       "name": "build-unixlike-clang-12-debug",
+      "displayName": "Linux Clang 12 Debug",
       "configurePreset": "unixlike-clang-12-debug"
     },
     {
       "name": "build-unixlike-clang-12-release",
+      "displayName": "Linux Clang 12 Release",
       "configurePreset": "unixlike-clang-12-release"
     },
     {
       "name": "build-unixlike-clang-13-debug",
+      "displayName": "Linux Clang 13 Debug",
       "configurePreset": "unixlike-clang-13-debug"
     },
     {
       "name": "build-unixlike-clang-13-release",
+      "displayName": "Linux Clang 13 Release",
       "configurePreset": "unixlike-clang-13-release"
     },
     {
       "name": "build-unixlike-clang-14-debug",
+      "displayName": "Linux Clang 14 Debug",
       "configurePreset": "unixlike-clang-14-debug"
     },
     {
       "name": "build-unixlike-clang-14-release",
+      "displayName": "Linux Clang 14 Release",
       "configurePreset": "unixlike-clang-14-release"
     },
     {
       "name": "build-unixlike-clang-15-debug",
+      "displayName": "Linux Clang 15 Debug",
       "configurePreset": "unixlike-clang-15-debug"
     },
     {
       "name": "build-unixlike-clang-15-release",
+      "displayName": "Linux Clang 15 Release",
       "configurePreset": "unixlike-clang-15-release"
     },
     {
       "name": "build-win32-gcc-x64-mingw-debug",
+      "displayName": "Windows GCC MinGW Debug",
       "configurePreset": "win32-gcc-x64-mingw-debug"
     },
     {
       "name": "build-win32-gcc-x64-mingw-release",
+      "displayName": "Windows GCC MinGW Release",
       "configurePreset": "win32-gcc-x64-mingw-release"
     },
     {
       "name": "build-unixlike-clang-15-debug-static-analysis",
+      "displayName": "Linux Clang 15 Debug Static Analysis",
       "configurePreset": "unixlike-clang-15-debug-static-analysis"
     },
     {
       "name": "build-gcc-arm-debug",
+      "displayName": "Linux GCC ARM Debug",
       "configurePreset": "gcc-arm-debug"
     },
     {
       "name": "build-gcc-arm-release",
+      "displayName": "Linux GCC ARM Release",
       "configurePreset": "gcc-arm-release"
     },
     {
       "name": "build-clang-12-fuzzing",
+      "displayName": "Linux Clang 12 Fuzzing",
       "configurePreset": "clang-12-fuzzing"
     },
     {
       "name": "build-clang-13-fuzzing",
+      "displayName": "Linux Clang 13 Fuzzing",
       "configurePreset": "clang-13-fuzzing"
     },
     {
       "name": "build-clang-14-fuzzing",
+      "displayName": "Linux Clang 14 Fuzzing",
       "configurePreset": "clang-14-fuzzing"
     },
     {
       "name": "build-clang-15-fuzzing",
+      "displayName": "Linux Clang 15 Fuzzing",
       "configurePreset": "clang-15-fuzzing"
+    },
+    {
+      "name": "build-clang-15-qt",
+      "displayName": "Linux Clang 15 QT",
+      "configurePreset": "clang-15-qt"
     }
   ],
   "testPresets": [
@@ -529,185 +584,167 @@
     },
     {
       "name": "test-windows-2019-msvc-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "MSVC 2019 Debug",
       "inherits": "test-common",
       "configurePreset": "windows-2019-msvc-debug"
     },
     {
       "name": "test-windows-2019-msvc-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "MSVC 2019 Release",
       "inherits": "test-common",
       "configurePreset": "windows-2019-msvc-release"
     },
     {
       "name": "test-windows-2022-msvc-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "MSVC 2022 Debug",
       "inherits": "test-common",
       "configurePreset": "windows-2022-msvc-debug"
     },
     {
       "name": "test-windows-2022-msvc-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "MSVC 2022 Release",
       "inherits": "test-common",
       "configurePreset": "windows-2022-msvc-release"
     },
     {
       "name": "test-windows-clang-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Windows Clang Debug",
       "inherits": "test-common",
       "configurePreset": "windows-clang-debug"
     },
     {
       "name": "test-windows-clang-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Windows Clang Release",
       "inherits": "test-common",
       "configurePreset": "windows-clang-release"
     },
     {
       "name": "test-unixlike-gcc-10-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux GCC 10 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-gcc-10-debug"
     },
     {
       "name": "test-unixlike-gcc-10-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux GCC 10 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-gcc-10-release"
     },
     {
       "name": "test-unixlike-gcc-11-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux GCC 11 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-gcc-11-debug"
     },
     {
       "name": "test-unixlike-gcc-11-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux GCC 11 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-gcc-11-release"
     },
     {
       "name": "test-unixlike-gcc-12-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux GCC 12 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-gcc-12-debug"
     },
     {
       "name": "test-unixlike-gcc-12-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux GCC 12 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-gcc-12-release"
     },
     {
       "name": "test-unixlike-clang-12-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 10 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-12-debug"
     },
     {
       "name": "test-unixlike-clang-12-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 12 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-12-release"
     },
     {
       "name": "test-unixlike-clang-13-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 13 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-13-debug"
     },
     {
       "name": "test-unixlike-clang-13-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 13 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-13-release"
     },
     {
       "name": "test-unixlike-clang-14-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 14 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-14-debug"
     },
     {
       "name": "test-unixlike-clang-14-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 14 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-14-release"
     },
     {
       "name": "test-unixlike-clang-15-debug",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 15 Debug",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-15-debug"
     },
     {
       "name": "test-unixlike-clang-15-release",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 15 Release",
       "inherits": "test-common",
       "configurePreset": "unixlike-clang-15-release"
     },
     {
       "name": "test-win32-gcc-x64-mingw-debug",
-      "description": "Enable output and stop on failure",
+      "displayName": "Windows MinGW GCC Debug",
       "inherits": "test-common",
       "configuration": "Debug",
       "configurePreset": "win32-gcc-x64-mingw-debug"
     },
     {
       "name": "test-win32-gcc-x64-mingw-release",
-      "description": "Enable output and stop on failure",
+      "displayName": "Windows MinGW GCC Release",
       "inherits": "test-common",
       "configuration": "Release",
       "configurePreset": "win32-gcc-x64-mingw-release"
     },
     {
       "name": "test-clang-12-fuzzing",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 12 Fuzzing",
       "inherits": "test-common",
       "configurePreset": "clang-12-fuzzing"
     },
     {
       "name": "test-clang-13-fuzzing",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 13 Fuzzing",
       "inherits": "test-common",
       "configurePreset": "clang-13-fuzzing"
     },
     {
       "name": "test-clang-14-fuzzing",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 14 Fuzzing",
       "inherits": "test-common",
       "configurePreset": "clang-14-fuzzing"
     },
     {
       "name": "test-clang-15-fuzzing",
-      "displayName": "Strict",
-      "description": "Enable output and stop on failure",
+      "displayName": "Linux Clang 15 Fuzzing",
       "inherits": "test-common",
       "configurePreset": "clang-15-fuzzing"
+    },
+    {
+      "name": "test-clang-15-qt",
+      "displayName": "Linux Clang 15 QT",
+      "inherits": "test-common",
+      "configurePreset": "clang-15-qt"
     }
   ]
 }

@@ -2,12 +2,12 @@
 # Build and test environment for CI
 # =================================
 
-FROM ubuntu:22.10 as cpp-docker-common
+FROM ubuntu:23.04 as cpp-docker-common
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CLANG_COMPILER_VERSION=15
-ARG CMAKE_VERSION=3.26.3
-ENV PATH="${PATH}:/cmake-3.26.3-linux-x86_64/bin/:"
+ARG CMAKE_VERSION=3.28.3
+ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missing \
   binutils \
@@ -20,8 +20,11 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missin
   git \
   lsb-release \
   ninja-build \
+  pipx \
   python3 \
   python3-pip \
+  python3-setuptools \
+  python3-venv \
   shellcheck \
   ssh \
   software-properties-common \
@@ -61,8 +64,8 @@ RUN apt-get -y install --fix-missing vim \
     && apt-get autoremove -y && apt-get clean
 
 # Dev user for inside the container
-RUN groupadd -g 1000 ${DEV_USER} && \
-  useradd -m -u 1000 -g 1000 -d /home/${DEV_USER} -s /bin/bash ${DEV_USER} && \
+RUN groupadd -f -g 1000 ${DEV_USER} && \
+  useradd --non-unique -m -u 1000 -g 1000 -d /home/${DEV_USER} -s /bin/bash ${DEV_USER} && \
   usermod -a -G adm,cdrom,sudo,dip,plugdev ${DEV_USER} && \
   echo "${DEV_USER}:${DEV_USER}" | chpasswd && \
   echo "${DEV_USER}   ALL=(ALL:ALL) ALL" >> /etc/sudoers
@@ -79,7 +82,7 @@ WORKDIR /home/${DEV_USER}
 RUN sed -i 's/\\h/docker/;s/01;32m/01;33m/' /home/${DEV_USER}/.bashrc \
   && mkdir /home/${DEV_USER}/git
 
-RUN pip install --user conan==1.59
+RUN pipx install conan
 
 
 FROM cpp-docker-common as cpp-docker-ci
@@ -88,13 +91,13 @@ ARG CI_USER=ci
 ENV PATH="${PATH}:/home/${CI_USER}/.local/bin/"
 
 # Dev user for inside the container
-RUN groupadd -g 1000 ${CI_USER} && \
-  useradd -m -u 1000 -g 1000 -d /home/${CI_USER} -s /bin/bash ${CI_USER} && \
+RUN groupadd -f -g 1000 ${CI_USER} && \
+  useradd --non-unique -m -u 1000 -g 1000 -d /home/${CI_USER} -s /bin/bash ${CI_USER} && \
   usermod -a -G adm,cdrom,sudo,dip,plugdev ${CI_USER} && \
   echo "${CI_USER}:${CI_USER}" | chpasswd && \
   echo "${CI_USER}   ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 COPY ccache.conf /etc/.
 USER ${CI_USER}
-RUN pip install conan==1.59
+RUN pipx install conan
 WORKDIR /home/${CI_USER}

@@ -6,7 +6,7 @@ TARGET_LINK_LIBRARIES(
         fuzz_tester
         PRIVATE project_options
         project_warnings
-        CONAN_PKG::fmt
+        fmt::fmt-header-only
         -coverage
         -fsanitize=fuzzer,undefined,address)
 TARGET_COMPILE_OPTIONS(fuzz_tester PRIVATE -fsanitize=fuzzer,undefined,address)

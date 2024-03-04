@@ -1,0 +1,7 @@
+# Build directories and binary files
+build/
+out/
+cmake-build-*/
+
+# User spesific settings
+CMakeUserPresets.json

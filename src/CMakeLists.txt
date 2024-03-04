@@ -30,15 +30,24 @@ IF(CPP_STARTER_USE_CPPZMQ_PROTO)
     ADD_SUBDIRECTORY(protobuf.cppzmq)
 ENDIF()
 
+# QT example
+IF(CPP_STARTER_USE_QT)
+    MESSAGE("Using QT")
+    ADD_SUBDIRECTORY(qt)
+ENDIF()
 
+
+FIND_PACKAGE(docopt REQUIRED)
+FIND_PACKAGE(spdlog REQUIRED)
+FIND_PACKAGE(fmt REQUIRED)
 # Generic test that uses conan libs
 ADD_EXECUTABLE(intro main.cpp)
 TARGET_LINK_LIBRARIES(
         intro
         PRIVATE project_options
         project_warnings
-        CONAN_PKG::docopt.cpp
-        CONAN_PKG::fmt
-        CONAN_PKG::spdlog)
+        docopt_s
+        fmt::fmt-header-only
+        spdlog::spdlog_header_only)
 
 TARGET_INCLUDE_DIRECTORIES(intro PRIVATE ${CMAKE_BINARY_DIR}/generated)

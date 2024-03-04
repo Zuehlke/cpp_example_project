@@ -1,14 +1,11 @@
 # cpp_example_project
 
-> **Warning**
-> Until now only conan 1.x is supported. Support for conan 2.x will come soon.
-
 Ongoing project of the Zühlke Germany **Modern C++ Topic Group**.
 
 With this project, we want to provide an example and starting point for C++ projects (embedded and otherwise), especially regarding tooling.
 
 The project has initially been forked/copied from [Jason Turner's cpp_starter_project](https://github.com/lefticus/cpp_starter_project) and is customised by Zühlke members and adapted to [Jason Turner's cmake_conan_boilerplate_template](https://github.com/cpp-best-practices/cmake_conan_boilerplate_template).
-
+It also uses CMake structure from [Jason Turner's cmake_template](https://github.com/cpp-best-practices/cmake_template) repository.
 
 ## Build Status
 
