@@ -188,7 +188,7 @@ jobs:
 
     - name: Configure via CMake
       shell: bash
-      run: cmake --preset unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-static-analysis
+      run: cmake --preset unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-static-analysis -DCXX_STANDARD=17
 
     - name: Build
       shell: bash
