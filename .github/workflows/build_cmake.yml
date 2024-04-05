@@ -5,8 +5,7 @@ on: [push, pull_request]
 env:
   # Conan cache environment variables
   CONAN_SYSREQUIRES_MODE: enabled
-  CONAN_USER_HOME: "${{ github.workspace }}/conan-cache"
-  CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan-cache/short"
+  CONAN_USER_HOME: "~/.conan2"
 
 jobs:
   docker:
