@@ -295,6 +295,7 @@ jobs:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
       matrix:
         os: [ubuntu-22.04]
+        buildtype: [debug]
         compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
         cxx: [20]
 
