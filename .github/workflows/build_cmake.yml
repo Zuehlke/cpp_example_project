@@ -302,6 +302,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install conan
+      shell: bash
+      run: |
+        python3 -m pip install --upgrade pip setuptools conan
+        source ~/.profile
+
     - name: Cache
       uses: actions/cache@v4
       env:
@@ -312,12 +318,6 @@ jobs:
           ~/.cache/pip
           ~/.ccache
         key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('cmake/Conan.cmake') }}
-
-    - name: Install conan
-      shell: bash
-      run: |
-        python3 -m pip install --upgrade pip setuptools conan
-        source ~/.profile
 
     - name: Install dependencies
       run:   |
