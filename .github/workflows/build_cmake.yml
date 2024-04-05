@@ -53,7 +53,7 @@ jobs:
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -108,7 +108,7 @@ jobs:
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -157,7 +157,7 @@ jobs:
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -214,7 +214,7 @@ jobs:
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('cmake/Conan.cmake') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -265,7 +265,7 @@ jobs:
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('cmake/Conan.cmake') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -296,17 +296,11 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         buildtype: [debug]
-        compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
+        compiler: [ {name: 'Clang 15', preset: clang-15-qt, pkgs: 'clang-15 llvm-15'} ]
         cxx: [20]
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Install conan
-      shell: bash
-      run: |
-        python3 -m pip install --upgrade pip setuptools conan
-        source ~/.profile
 
     - name: Cache
       uses: actions/cache@v4
@@ -317,7 +311,13 @@ jobs:
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ matrix.buildtype }}-${{ hashFiles('cmake/Conan.cmake') }}
+        key: ${{ runner.os }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
+
+    - name: Install conan
+      shell: bash
+      run: |
+        python3 -m pip install --upgrade pip setuptools conan
+        source ~/.profile
 
     - name: Install dependencies
       run:   |
@@ -335,12 +335,12 @@ jobs:
 
     - name: Configure via CMake
       shell: bash
-      run: cmake --preset ${{ matrix.compiler.preset }}-qt -DCXX_STANDARD=${{ matrix.cxx }}
+      run: cmake --preset ${{ matrix.compiler.preset }} -DCXX_STANDARD=${{ matrix.cxx }}
 
     - name: Build
       shell: bash
-      run:  cmake --build --preset build-${{ matrix.compiler.preset }}-qt
+      run:  cmake --build --preset build-${{ matrix.compiler.preset }}
 
     - name: Test
       shell: bash
-      run: ctest --preset test-${{ matrix.compiler.preset }}-qt
+      run: ctest --preset test-${{ matrix.compiler.preset }}
