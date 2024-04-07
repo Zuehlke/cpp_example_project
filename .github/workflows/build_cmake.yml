@@ -296,7 +296,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         buildtype: [debug]
-        compiler: [ {name: 'Clang 15', preset: clang-15-qt, pkgs: 'clang-15 llvm-15'} ]
+        compiler: [ {name: 'Clang 15', preset: clang-15-qt, pkgs: 'clang-15 llvm-15 llvm-15-dev llvm-15-linker-tools llvm-15-tools llvm-15-runtime'} ]
         cxx: [20]
 
     steps:
@@ -321,6 +321,7 @@ jobs:
 
     - name: Install dependencies
       run:   |
+             sudo apt remove clang* llvm*
              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
              sudo apt update
              sudo apt install ninja-build  ccache ${{ matrix.compiler.pkgs }} libx11-xcb-dev libfontenc-dev libice-dev \
