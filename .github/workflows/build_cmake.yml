@@ -3,20 +3,16 @@ name: CMake
 on: [push, pull_request]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: RelWithDebInfo
-
   # Conan cache environment variables
   CONAN_SYSREQUIRES_MODE: enabled
-  CONAN_USER_HOME: "${{ github.workspace }}/conan-cache"
-  CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan-cache/short"
+  CONAN_USER_HOME: "~/.conan2"
 
 jobs:
   docker:
     name: Test docker images
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build docker-ci image
         shell: bash
@@ -46,17 +42,18 @@ jobs:
         cxx: [17, 20]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-conan-modules
       with:
         path: |
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
-        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+          ~/.ccache
+        key: ${{ runner.os }}-${{ matrix.cxx }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -68,7 +65,7 @@ jobs:
       run:   |
              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
              sudo apt update
-             sudo apt install ninja-build ${{ matrix.compiler.pkgs }}
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} ccache
       shell: bash
 
     - name: Configure via CMake
@@ -100,17 +97,18 @@ jobs:
         cxx: [17]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-conan-modules
       with:
         path: |
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
-        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+          ~/.ccache
+        key: ${{ runner.os }}-${{ matrix.cxx }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -122,7 +120,7 @@ jobs:
       run:   |
              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
              sudo apt update
-             sudo apt install ninja-build ${{ matrix.compiler.pkgs }}
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }}  ccache
       shell: bash
 
     - name: Configure via CMake
@@ -148,17 +146,18 @@ jobs:
         compiler: [{name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15 llvm-15-dev libclang-15-dev', iwyu_branch: 'clang_15', path_prefix: "/usr/lib/llvm-15"}]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-conan-modules
       with:
         path: |
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
-        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+          ~/.ccache
+        key: ${{ runner.os }}-${{ matrix.cxx }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -170,7 +169,7 @@ jobs:
       run:   |
              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
              sudo apt update
-             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} cppcheck
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} cppcheck  ccache
       shell: bash
 
     - name: Compile and install IWYU
@@ -204,17 +203,18 @@ jobs:
         buildtype: [debug, release]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-conan-modules
       with:
         path: |
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
-        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+          ~/.ccache
+        key: ${{ runner.os }}-${{ matrix.cxx }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -225,7 +225,7 @@ jobs:
     - name: Install dependencies
       run:   |
              sudo apt update
-             sudo apt install ninja-build wget
+             sudo apt install ninja-build wget ccache
       shell: bash
 
     - name: Install GCC ARM
@@ -254,17 +254,18 @@ jobs:
         compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-conan-modules
       with:
         path: |
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
-        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+          ~/.ccache
+        key: ${{ runner.os }}-${{ matrix.cxx }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -276,7 +277,7 @@ jobs:
       run:   |
              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
              sudo apt update
-             sudo apt install ninja-build ${{ matrix.compiler.pkgs }}
+             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} ccache
       shell: bash
 
     - name: Configure via CMake
@@ -294,21 +295,23 @@ jobs:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
       matrix:
         os: [ubuntu-22.04]
-        compiler: [ {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'} ]
+        buildtype: [debug]
+        compiler: [ {name: 'Clang 15', preset: clang-15-qt, pkgs: 'clang-15 llvm-15 llvm-15-dev llvm-15-linker-tools llvm-15-tools llvm-15-runtime'} ]
         cxx: [20]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: cache-conan-modules
       with:
         path: |
           ${{ env.CONAN_USER_HOME }}
           ~/.cache/pip
-        key: ${{ runner.os }}-${{ env.BUILD_TYPE }}-${{ hashFiles('CMakeLists.txt') }}-${{ hashFiles('cmake/Conan.cmake') }}
+          ~/.ccache
+        key: ${{ runner.os }}-${{ matrix.cxx }}-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}-${{ hashFiles('conanfile.py') }}
 
     - name: Install conan
       shell: bash
@@ -318,9 +321,10 @@ jobs:
 
     - name: Install dependencies
       run:   |
+             sudo apt remove clang* llvm*
              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
              sudo apt update
-             sudo apt install ninja-build ${{ matrix.compiler.pkgs }} libx11-xcb-dev libfontenc-dev libice-dev \
+             sudo apt install clang ninja-build build-essential ccache ${{ matrix.compiler.pkgs }} libx11-xcb-dev libfontenc-dev libice-dev \
              libsm-dev libxaw7-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev libxfixes-dev libxi-dev \
              libxinerama-dev libxkbfile-dev libxmu-dev libxmuu-dev libxpm-dev libxrandr-dev libxrender-dev libxres-dev \
              libxss-dev libxt-dev libxtst-dev libxv-dev libxxf86vm-dev libxcb-render0-dev libxcb-render-util0-dev \
@@ -332,12 +336,12 @@ jobs:
 
     - name: Configure via CMake
       shell: bash
-      run: cmake --preset ${{ matrix.compiler.preset }}-qt -DCXX_STANDARD=${{ matrix.cxx }}
+      run: cmake --preset ${{ matrix.compiler.preset }} -DCXX_STANDARD=${{ matrix.cxx }}
 
     - name: Build
       shell: bash
-      run:  cmake --build --preset build-${{ matrix.compiler.preset }}-qt
+      run:  cmake --build --preset build-${{ matrix.compiler.preset }}
 
     - name: Test
       shell: bash
-      run: ctest --preset test-${{ matrix.compiler.preset }}-qt
+      run: ctest --preset test-${{ matrix.compiler.preset }}
