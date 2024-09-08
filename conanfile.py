@@ -14,17 +14,17 @@ class HelloConan(ConanFile):
         cmake = CMakeToolchain(self)
         cmake.user_presets_path = None
         if self.settings.get_safe('arch') == 'armv7':
-            self.requires = conans.model.requires.Requirements(['fmt/10.0.0', 'sml/1.1.6'])
+            self.requires = conans.model.requires.Requirements(['fmt/11.0.2', 'sml/1.1.11'])
             return
 
         if os.getenv("CONFIGURE_QT") == '1':
-            self.requires = conans.model.requires.Requirements(['catch2/3.4.0', 'docopt.cpp/0.6.3', 'gtest/1.14.0',
-                                                                'qt/6.6.1', 'spdlog/1.12.0'])
+            self.requires = conans.model.requires.Requirements(['catch2/3.7.0', 'docopt.cpp/0.6.3', 'gtest/1.15.0',
+                                                                'qt/6.7.1', 'spdlog/1.14.1'])
         else:
-            requirement = ['catch2/3.4.0', 'gtest/1.14.0', 'docopt.cpp/0.6.3',
-                           'spdlog/1.12.0', 'sml/1.1.8', 'nlohmann_json/3.11.2',
-                           'boost/1.83.0', 'crowcpp-crow/1.0+5', 'cppzmq/4.9.0',
-                           'protobuf/3.21.12']
+            requirement = ['catch2/3.7.0', 'gtest/1.15.0', 'docopt.cpp/0.6.3',
+                           'spdlog/1.14.1', 'sml/1.1.11', 'nlohmann_json/3.11.3',
+                           'boost/1.83.0', 'crowcpp-crow/1.2.0', 'cppzmq/4.10.0',
+                           'protobuf/5.27.0']
             self.requires = conans.model.requires.Requirements(requirement)
 
     def build(self):
