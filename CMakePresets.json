@@ -473,6 +473,20 @@
       }
     },
     {
+      "name": "unixlike-clang-17-debug-static-analysis",
+      "displayName": "Clang 17 Debug - Static Analysis",
+      "description": "Target Unix-like OS with the Clang 17 compiler, debug build type",
+      "inherits": "unixlike-clang-17-debug",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-17",
+        "CMAKE_CXX_COMPILER": "clang++-17",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_CPPCHECK": "ON",
+        "ENABLE_CLANG_TIDY": "ON",
+        "ENABLE_INCLUDE_WHAT_YOU_USE": "ON"
+      }
+    },
+    {
       "name": "gcc-arm-debug",
       "displayName": "GCC ARM Debug",
       "generator": "Ninja",
@@ -547,6 +561,24 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang-15",
         "CMAKE_CXX_COMPILER": "clang++-15",
+        "CPP_STARTER_USE_SML": "OFF",
+        "CPP_STARTER_USE_BOOST_BEAST": "OFF",
+        "CPP_STARTER_USE_CROW": "OFF",
+        "CPP_STARTER_USE_CPPZMQ_PROTO": "OFF",
+        "CPP_STARTER_USE_QT": "ON"
+      },
+      "environment": {
+        "NOT_ON_C3I": "1",
+        "CONFIGURE_QT": "1"
+      }
+    },
+    {
+      "name": "clang-18-qt",
+      "displayName": "Clang 18 QT",
+      "inherits": "conf-unixlike-common",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-18",
+        "CMAKE_CXX_COMPILER": "clang++-18",
         "CPP_STARTER_USE_SML": "OFF",
         "CPP_STARTER_USE_BOOST_BEAST": "OFF",
         "CPP_STARTER_USE_CROW": "OFF",
@@ -726,6 +758,11 @@
       "configurePreset": "unixlike-clang-15-debug-static-analysis"
     },
     {
+      "name": "build-unixlike-clang-17-debug-static-analysis",
+      "displayName": "Linux Clang 17 Debug Static Analysis",
+      "configurePreset": "unixlike-clang-17-debug-static-analysis"
+    },
+    {
       "name": "build-gcc-arm-debug",
       "displayName": "Linux GCC ARM Debug",
       "configurePreset": "gcc-arm-debug"
@@ -759,6 +796,11 @@
       "name": "build-clang-15-qt",
       "displayName": "Linux Clang 15 QT",
       "configurePreset": "clang-15-qt"
+    },
+    {
+      "name": "build-clang-18-qt",
+      "displayName": "Linux Clang 18 QT",
+      "configurePreset": "clang-18-qt"
     }
   ],
   "testPresets": [
@@ -1009,6 +1051,12 @@
       "displayName": "Linux Clang 15 QT",
       "inherits": "test-common",
       "configurePreset": "clang-15-qt"
+    },
+    {
+      "name": "test-clang-18-qt",
+      "displayName": "Linux Clang 18 QT",
+      "inherits": "test-common",
+      "configurePreset": "clang-18-qt"
     }
   ]
 }

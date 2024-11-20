@@ -42,8 +42,7 @@ jobs:
                     {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'},
                     {name: 'Clang 16', preset: clang-16, pkgs: 'clang-16 llvm-16'},
                     {name: 'Clang 17', preset: clang-17, pkgs: 'clang-17 llvm-17'},
-                    {name: 'Clang 18', preset: clang-18, pkgs: 'clang-18 llvm-18'},
-                    {name: 'Clang 19', preset: clang-19, pkgs: 'clang-19 llvm-19'}
+                    {name: 'Clang 18', preset: clang-18, pkgs: 'clang-18 llvm-18'}
                   ]
         cxx: [17, 20]
 
@@ -94,7 +93,7 @@ jobs:
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-22.04]
         buildtype: [debug]
         compiler: [ {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
                     {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
@@ -304,7 +303,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         buildtype: [debug]
-        compiler: [ {name: 'Clang 15', preset: clang-15-qt, pkgs: 'clang-15 llvm-15 llvm-15-dev llvm-15-linker-tools llvm-15-tools llvm-15-runtime'} ]
+        compiler: [ {name: 'Clang 18', preset: clang-18-qt, pkgs: 'clang-18 llvm-18 llvm-18-dev llvm-18-linker-tools llvm-18-tools llvm-18-runtime'} ]
         cxx: [20]
 
     steps:
