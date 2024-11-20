@@ -39,7 +39,6 @@ jobs:
                     {name: 'GCC 12', preset: gcc-12, pkgs: 'gcc-12 g++-12 lib32gcc-12-dev gcc-multilib'},
                     {name: 'GCC 13', preset: gcc-13, pkgs: 'gcc-13 g++-13 lib32gcc-13-dev gcc-multilib'},
                     {name: 'GCC 14', preset: gcc-14, pkgs: 'gcc-14 g++-14 lib32gcc-14-dev gcc-multilib'},
-                    {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'},
                     {name: 'Clang 16', preset: clang-16, pkgs: 'clang-16 llvm-16'},
                     {name: 'Clang 17', preset: clang-17, pkgs: 'clang-17 llvm-17'},
                     {name: 'Clang 18', preset: clang-18, pkgs: 'clang-18 llvm-18'}
@@ -97,7 +96,8 @@ jobs:
         buildtype: [debug]
         compiler: [ {name: 'Clang 12', preset: clang-12, pkgs: 'clang-12 llvm-12'},
                     {name: 'Clang 13', preset: clang-13, pkgs: 'clang-13 llvm-13'},
-                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'}
+                    {name: 'Clang 14', preset: clang-14, pkgs: 'clang-14 llvm-14'},
+                    {name: 'Clang 15', preset: clang-15, pkgs: 'clang-15 llvm-15'}
                   ]
         cxx: [17]
 
