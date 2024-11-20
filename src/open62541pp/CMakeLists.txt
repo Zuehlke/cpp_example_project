@@ -1,0 +1,16 @@
+INCLUDE(FetchContent)
+
+FETCHCONTENT_DECLARE(
+        open62541pp
+        GIT_REPOSITORY https://github.com/open62541pp/open62541pp.git
+        GIT_TAG v0.15.0
+)
+FETCHCONTENT_MAKEAVAILABLE(open62541pp)
+
+INCLUDE_DIRECTORIES(${open62541pp_SOURCE_DIR})
+
+ADD_EXECUTABLE(open62541pp_client client.cpp)
+TARGET_LINK_LIBRARIES(open62541pp_client PRIVATE open62541pp::open62541pp)
+
+ADD_EXECUTABLE(open62541pp_server server.cpp)
+TARGET_LINK_LIBRARIES(open62541pp_server PRIVATE open62541pp::open62541pp)
