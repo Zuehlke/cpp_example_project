@@ -18,12 +18,12 @@ class HelloConan(ConanFile):
             return
 
         if os.getenv("CONFIGURE_QT") == '1':
-            self.requires = conans.model.requires.Requirements(['catch2/3.7.0', 'docopt.cpp/0.6.3', 'gtest/1.15.0',
-                                                                'qt/6.7.1', 'spdlog/1.14.1'])
+            self.requires = conans.model.requires.Requirements(['catch2/3.7.1', 'docopt.cpp/0.6.3', 'gtest/1.15.0',
+                                                                'qt/6.7.3', 'spdlog/1.15.0'])
         else:
-            requirement = ['catch2/3.7.0', 'gtest/1.15.0', 'docopt.cpp/0.6.3',
-                           'spdlog/1.14.1', 'sml/1.1.11', 'nlohmann_json/3.11.3',
-                           'boost/1.83.0', 'crowcpp-crow/1.2.0', 'cppzmq/4.10.0',
+            requirement = ['catch2/3.7.1', 'gtest/1.15.0', 'docopt.cpp/0.6.3',
+                           'spdlog/1.15.0', 'sml/1.1.11', 'nlohmann_json/3.11.3',
+                           'boost/1.86.0', 'crowcpp-crow/1.2.0', 'cppzmq/4.10.0',
                            'protobuf/5.27.0']
             self.requires = conans.model.requires.Requirements(requirement)
 

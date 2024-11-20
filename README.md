@@ -31,7 +31,7 @@ See [cppreference.com](https://en.cppreference.com/w/cpp/compiler_support)
 to see which features are supported by each compiler.
 The following compilers should work:
 
-  * [gcc 7+](https://gcc.gnu.org/)
+  * [gcc 10+](https://gcc.gnu.org/)
     <details>
     <summary>Install command</summary>
 
@@ -48,7 +48,7 @@ The following compilers should work:
             brew install gcc
     </details>
 
-  * [clang 6+](https://clang.llvm.org/)
+  * [clang 12+](https://clang.llvm.org/)
     <details>
     <summary>Install command</summary>
 
@@ -238,6 +238,10 @@ The output looks like this:
     "unixlike-gcc-11-release"     - GCC 11 Release
     "unixlike-gcc-12-debug"       - GCC 12 Debug
     "unixlike-gcc-12-release"     - GCC 12 Release
+    "unixlike-gcc-13-debug"       - GCC 13 Debug
+    "unixlike-gcc-13-release"     - GCC 13 Release
+    "unixlike-gcc-14-debug"       - GCC 14 Debug
+    "unixlike-gcc-14-release"     - GCC 14 Release
     "unixlike-clang-12-debug"     - Clang 12 Debug
     "unixlike-clang-12-release"   - Clang 12 Release
     "unixlike-clang-13-debug"     - Clang 13 Debug
@@ -246,6 +250,14 @@ The output looks like this:
     "unixlike-clang-14-release"   - Clang 14 Release
     "unixlike-clang-15-debug"     - Clang 15 Debug
     "unixlike-clang-15-release"   - Clang 15 Release
+    "unixlike-clang-16-debug"     - Clang 16 Debug
+    "unixlike-clang-16-release"   - Clang 16 Release
+    "unixlike-clang-17-debug"     - Clang 17 Debug
+    "unixlike-clang-17-release"   - Clang 17 Release
+    "unixlike-clang-18-debug"     - Clang 18 Debug
+    "unixlike-clang-18-release"   - Clang 18 Release
+    "unixlike-clang-19-debug"     - Clang 19 Debug
+    "unixlike-clang-19-release"   - Clang 19 Release
 
 Choose a configuration which is suitable and use following command for example.
 

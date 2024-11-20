@@ -1,5 +1,5 @@
 SET(TARGET_TRIPLET "arm-none-eabi")
-SET(ARM_COMPILER_VERSION 12.2.rel1)
+SET(ARM_COMPILER_VERSION 13.3.rel1)
 SET(ARM_COMPILER_PATH /opt/arm-gnu-toolchain-${ARM_COMPILER_VERSION}-x86_64-${TARGET_TRIPLET}/bin)
 # Without that flag CMake is not able to pass test compilation check
 SET(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)

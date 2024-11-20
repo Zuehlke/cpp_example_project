@@ -1,10 +1,10 @@
-# [Choice] focal (20.04), jammy (22.04), lunar (23.04)
-ARG VARIANT="lunar"
+# [Choice] focal (20.04), jammy (22.04), lunar (23.04), noble (24.04)
+ARG VARIANT="noble"
 FROM ubuntu:${VARIANT}
 
 # Restate the variant to use it later on in the llvm and cmake installations
 ARG VARIANT
-ARG CMAKE_VERSION=3.28.3
+ARG CMAKE_VERSION=3.30.5
 ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 # Install necessary packages available from standard repos
@@ -31,9 +31,9 @@ ENV CONAN_SYSREQUIRES_SUDO 0
 ENV CONAN_SYSREQUIRES_MODE enabled
 
 # User-settable versions:
-# This Dockerfile should support gcc-[10, 11, 12, 13] and clang-[10, 11, 12, 13, 14, 15, 16, 17]
+# This Dockerfile should support gcc-[10, 11, 12, 13, 14] and clang-[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 # Earlier versions of clang will require significant modifications to the IWYU section
-ARG GCC_VER="12"
+ARG GCC_VER="14"
 # Add gcc-${GCC_VER}
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
     apt-get update -qq && export DEBIAN_FRONTEND=noninteractive && \
@@ -44,7 +44,7 @@ RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
 RUN update-alternatives --install /usr/bin/gcc gcc $(which gcc-${GCC_VER}) 100
 RUN update-alternatives --install /usr/bin/g++ g++ $(which g++-${GCC_VER}) 100
 
-ARG LLVM_VER="15"
+ARG LLVM_VER="17"
 # Add clang-${LLVM_VER}
 ARG LLVM_URL="http://apt.llvm.org/${VARIANT}/"
 ARG LLVM_PKG="llvm-toolchain-${VARIANT}-${LLVM_VER}"

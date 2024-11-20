@@ -2,11 +2,11 @@
 # Build and test environment for CI
 # =================================
 
-FROM ubuntu:23.04 as cpp-docker-common
+FROM ubuntu:24.04 as cpp-docker-common
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG CLANG_COMPILER_VERSION=15
-ARG CMAKE_VERSION=3.28.3
+ARG CLANG_COMPILER_VERSION=17
+ARG CMAKE_VERSION=3.30.5
 ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missing \
@@ -50,7 +50,6 @@ RUN mkdir iwyu && cd iwyu \
     && cd ../.. \
     && rm -rf iwyu
 
-
 # =================================
 # DEV environment for local machine
 # =================================
@@ -69,10 +68,6 @@ RUN groupadd -f -g 1000 ${DEV_USER} && \
   usermod -a -G adm,cdrom,sudo,dip,plugdev ${DEV_USER} && \
   echo "${DEV_USER}:${DEV_USER}" | chpasswd && \
   echo "${DEV_USER}   ALL=(ALL:ALL) ALL" >> /etc/sudoers
-
-# fix "Missing privilege separation directory" error in SSHD
-# see: https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/45234
-RUN chmod 0755 /var/run/sshd
 
 COPY ccache.conf /etc/.
 
