@@ -1,0 +1,5 @@
+ADD_EXECUTABLE(open62541_client client.cpp)
+TARGET_LINK_LIBRARIES(open62541_client PRIVATE open62541::open62541)
+
+ADD_EXECUTABLE(open62541_server server.cpp)
+TARGET_LINK_LIBRARIES(open62541_server PRIVATE open62541::open62541)
