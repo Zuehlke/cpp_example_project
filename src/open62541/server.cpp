@@ -1,6 +1,8 @@
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 
+// This example is the original one from the open62541 examples
+
 int main()
 {
     UA_Server *server = UA_Server_new();

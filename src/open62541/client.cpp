@@ -2,6 +2,8 @@
 #include <open62541/client_highlevel.h>
 #include <open62541/client_config_default.h>
 
+// This example is the original one from the open62541 examples
+
 int main()
 {
     /* Create a client and connect */
@@ -18,8 +20,10 @@ int main()
     UA_Variant value;/* Variants can hold scalar values and arrays of any type */
     UA_Variant_init(&value);
     status = UA_Client_readValueAttribute(client, UA_NODEID_STRING(1, "the.answer"), &value);
-    if (status == UA_STATUSCODE_GOOD &&
-        UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) { printf("the value is: %i\n", *static_cast<UA_Int32 *>(value.data)); }
+    if (status == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32]))
+    {
+        printf("the value is: %i\n", *static_cast<UA_Int32 *>(value.data));
+    }
 
     /* Clean up */
     UA_Variant_clear(&value);
