@@ -283,6 +283,43 @@ For example:
     cmake --preset test-unixlike-clang-15-debug
 
 
+## Possible option
+
+| Option  | Comment | Default |
+| ------- | -------- | -------- |
+| ENABLE_PCH | Enable Precompiled Headers | OFF |
+| _**Static analyzers**_ |
+| ENABLE_CPPCHECK | Enable static analysis with cppcheck | OFF |
+| ENABLE_CLANG_TIDY | Enable static analysis with clang-tidy | OFF |
+| ENABLE_INCLUDE_WHAT_YOU_USE | Enable static analysis with include-what-you-use | OFF |
+| _**Tooling**_ |
+| ENABLE_CACHE | Enable cache if available | ON |
+| ENABLE_DOXYGEN | Enable doxygen doc builds of source | OFF |
+| _**Sanitizers**_ |
+| ENABLE_SANITIZER_UNDEFINED_BEHAVIOR | Enable undefined behavior sanitizer | OFF |
+| ENABLE_SANITIZER_THREAD | Enable thread sanitizer | OFF |
+| ENABLE_SANITIZER_MEMORY | Enable memory sanitizer | OFF |
+| ENABLE_SANITIZER_ADDRESS | Enable address sanitizer | OFF |
+| ENABLE_SANITIZER_LEAK | Enable leak sanitizer | OFF |
+| _**Others**_ |
+| ENABLE_COVERAGE | Enable coverage reporting for gcc/clang | OFF |
+| ENABLE_IPO | Enable Interprocedural Optimization, aka Link Time Optimization (LTO) | OFF |
+| WARNINGS_AS_ERRORS | Treat compiler warnings as errors | ON |
+| BUILD_SHARED_LIBS | Enable compilation of shared libraries | OFF |
+| ENABLE_TESTING | Enable Test Builds | ON |
+| ENABLE_FUZZING | Enable Fuzzing Builds | OFF |
+| _**Examples**_ |
+| CPP_STARTER_USE_SML | Enable compilation of SML sample | OFF |
+| CPP_STARTER_USE_BOOST_BEAST | Enable compilation of boost beast sample | OFF |
+| CPP_STARTER_USE_CROW | Enable compilation of crow sample | OFF |
+| CPP_STARTER_USE_CPPZMQ_PROTO | Enable compilation of protobuf and cppzmq sample | OFF |
+| CPP_STARTER_USE_EMBEDDED_TOOLCHAIN | Enable compilation of an example cortex m4 project | OFF |
+| CPP_STARTER_USE_QT | Enable compilation of an example QT project | | OFF |
+| _**Test frameworks**_ |
+| CPP_STARTER_USE_CATCH2 | Enable compilation of an example test project using catch2 | ON |
+| CPP_STARTER_USE_GTEST | Enable compilation of an example test project using googletest | ON |
+
+
 ## Troubleshooting
 
 ### Update Conan

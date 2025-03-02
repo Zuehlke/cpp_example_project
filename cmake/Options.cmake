@@ -36,3 +36,7 @@ OPTION(CPP_STARTER_USE_CROW "Enable compilation of crow sample" OFF)
 OPTION(CPP_STARTER_USE_CPPZMQ_PROTO "Enable compilation of protobuf and cppzmq sample" OFF)
 OPTION(CPP_STARTER_USE_EMBEDDED_TOOLCHAIN "Enable compilation of an example cortex m4 project" OFF)
 OPTION(CPP_STARTER_USE_QT "Enable compilation of an example QT project" OFF)
+
+# test frameworks
+OPTION(CPP_STARTER_USE_CATCH2 "Enable compilation of an example test project using catch2" ON)
+OPTION(CPP_STARTER_USE_GTEST "Enable compilation of an example test project using googletest" ON)
