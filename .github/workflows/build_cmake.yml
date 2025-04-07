@@ -42,8 +42,7 @@ jobs:
                     {name: 'Clang 16', preset: clang-16, pkgs: 'clang-16 llvm-16'},
                     {name: 'Clang 17', preset: clang-17, pkgs: 'clang-17 llvm-17'},
                     {name: 'Clang 18', preset: clang-18, pkgs: 'clang-18 llvm-18'},
-                    {name: 'Clang 19', preset: clang-19, pkgs: 'clang-19 llvm-19'},
-                    {name: 'Clang 20', preset: clang-20, pkgs: 'clang-20 llvm-20'}
+                    {name: 'Clang 19', preset: clang-19, pkgs: 'clang-19 llvm-19'}
                   ]
         cxx: [17, 20]
 
@@ -150,7 +149,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         buildtype: [debug]
-        compiler: [{name: 'Clang 20', preset: clang-20, pkgs: 'clang-20 llvm-20 llvm-20-dev libclang-20-dev', iwyu_branch: 'clang_20', path_prefix: "/usr/lib/llvm-20"}]
+        compiler: [{name: 'Clang 19', preset: clang-19, pkgs: 'clang-19 llvm-19 llvm-19-dev libclang-19-dev', iwyu_branch: 'clang_19', path_prefix: "/usr/lib/llvm-19"}]
         cxx: [17, 20]
 
     steps:
@@ -239,8 +238,8 @@ jobs:
 
     - name: Install GCC ARM
       run:   |
-             wget -O archive.tar.xz "https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz" && \
-             echo 95c011cee430e64dd6087c75c800f04b9c49832cc1000127a92a97f9c8d83af4 archive.tar.xz > /tmp/archive.sha256 && sha256sum -c /tmp/archive.sha256 && rm /tmp/archive.sha256 && \
+             wget -O archive.tar.xz "https://developer.arm.com/-/media/Files/downloads/gnu/14.2.rel1/binrel/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz" && \
+             echo 62a63b981fe391a9cbad7ef51b17e49aeaa3e7b0d029b36ca1e9c3b2a9b78823 archive.tar.xz > /tmp/archive.sha256 && sha256sum -c /tmp/archive.sha256 && rm /tmp/archive.sha256 && \
              tar xf archive.tar.xz -C /opt
       shell: bash
 
@@ -260,7 +259,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         buildtype: [debug]
-        compiler: [ {name: 'Clang 20', preset: clang-20, pkgs: 'clang-20 llvm-20'} ]
+        compiler: [ {name: 'Clang 19', preset: clang-19, pkgs: 'clang-19 llvm-19'} ]
 
     steps:
     - uses: actions/checkout@v4
