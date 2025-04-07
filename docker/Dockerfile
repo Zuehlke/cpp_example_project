@@ -5,8 +5,8 @@
 FROM ubuntu:24.04 as cpp-docker-common
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG CLANG_COMPILER_VERSION=17
-ARG CMAKE_VERSION=3.30.5
+ARG CLANG_COMPILER_VERSION=20
+ARG CMAKE_VERSION=4.0.0
 ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install --fix-missing \

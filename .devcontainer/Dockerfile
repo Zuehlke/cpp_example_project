@@ -4,7 +4,7 @@ FROM ubuntu:${VARIANT}
 
 # Restate the variant to use it later on in the llvm and cmake installations
 ARG VARIANT
-ARG CMAKE_VERSION=3.30.5
+ARG CMAKE_VERSION=4.0.0
 ENV PATH="${PATH}:/cmake-${CMAKE_VERSION}-linux-x86_64/bin/:"
 
 # Install necessary packages available from standard repos
@@ -31,7 +31,7 @@ ENV CONAN_SYSREQUIRES_SUDO 0
 ENV CONAN_SYSREQUIRES_MODE enabled
 
 # User-settable versions:
-# This Dockerfile should support gcc-[10, 11, 12, 13, 14] and clang-[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+# This Dockerfile should support gcc-[10, 11, 12, 13, 14] and clang-[10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 # Earlier versions of clang will require significant modifications to the IWYU section
 ARG GCC_VER="14"
 # Add gcc-${GCC_VER}
@@ -44,7 +44,7 @@ RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
 RUN update-alternatives --install /usr/bin/gcc gcc $(which gcc-${GCC_VER}) 100
 RUN update-alternatives --install /usr/bin/g++ g++ $(which g++-${GCC_VER}) 100
 
-ARG LLVM_VER="17"
+ARG LLVM_VER="20"
 # Add clang-${LLVM_VER}
 ARG LLVM_URL="http://apt.llvm.org/${VARIANT}/"
 ARG LLVM_PKG="llvm-toolchain-${VARIANT}-${LLVM_VER}"
@@ -92,8 +92,8 @@ RUN apt-get autoremove -y && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 ## Install ARM GCC toolchain
-RUN wget -O archive.tar.xz "https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz?rev=7bd049b7a3034e64885fa1a71c12f91d&hash=732D909FA8F68C0E1D0D17D08E057619" && \
-    echo 84be93d0f9e96a15addd490b6e237f588c641c8afdf90e7610a628007fc96867 archive.tar.xz > /tmp/archive.sha256 && sha256sum -c /tmp/archive.sha256 && rm /tmp/archive.sha256 && \
+RUN wget -O archive.tar.xz "https://developer.arm.com/-/media/Files/downloads/gnu/14.2.rel1/binrel/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz" && \
+    echo 62a63b981fe391a9cbad7ef51b17e49aeaa3e7b0d029b36ca1e9c3b2a9b78823 archive.tar.xz > /tmp/archive.sha256 && sha256sum -c /tmp/archive.sha256 && rm /tmp/archive.sha256 && \
     tar xf archive.tar.xz -C /opt
 
 # Allow the user to set compiler defaults

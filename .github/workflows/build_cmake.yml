@@ -41,7 +41,9 @@ jobs:
                     {name: 'GCC 14', preset: gcc-14, pkgs: 'gcc-14 g++-14 lib32gcc-14-dev gcc-multilib'},
                     {name: 'Clang 16', preset: clang-16, pkgs: 'clang-16 llvm-16'},
                     {name: 'Clang 17', preset: clang-17, pkgs: 'clang-17 llvm-17'},
-                    {name: 'Clang 18', preset: clang-18, pkgs: 'clang-18 llvm-18'}
+                    {name: 'Clang 18', preset: clang-18, pkgs: 'clang-18 llvm-18'},
+                    {name: 'Clang 19', preset: clang-19, pkgs: 'clang-19 llvm-19'},
+                    {name: 'Clang 20', preset: clang-20, pkgs: 'clang-20 llvm-20'}
                   ]
         cxx: [17, 20]
 
@@ -148,7 +150,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         buildtype: [debug]
-        compiler: [{name: 'Clang 17', preset: clang-17, pkgs: 'clang-17 llvm-17 llvm-17-dev libclang-17-dev', iwyu_branch: 'clang_17', path_prefix: "/usr/lib/llvm-17"}]
+        compiler: [{name: 'Clang 20', preset: clang-20, pkgs: 'clang-20 llvm-20 llvm-20-dev libclang-20-dev', iwyu_branch: 'clang_20', path_prefix: "/usr/lib/llvm-20"}]
         cxx: [17, 20]
 
     steps:
@@ -258,7 +260,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04]
         buildtype: [debug]
-        compiler: [ {name: 'Clang 17', preset: clang-17, pkgs: 'clang-17 llvm-17'} ]
+        compiler: [ {name: 'Clang 20', preset: clang-20, pkgs: 'clang-20 llvm-20'} ]
 
     steps:
     - uses: actions/checkout@v4
