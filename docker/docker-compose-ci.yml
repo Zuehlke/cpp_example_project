@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   ssh:
     security_opt: # options needed for gdb debugging

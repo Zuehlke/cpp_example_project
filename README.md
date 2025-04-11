@@ -31,7 +31,7 @@ See [cppreference.com](https://en.cppreference.com/w/cpp/compiler_support)
 to see which features are supported by each compiler.
 The following compilers should work:
 
-  * [gcc 7+](https://gcc.gnu.org/)
+  * [gcc 10+](https://gcc.gnu.org/)
     <details>
     <summary>Install command</summary>
 
@@ -48,7 +48,7 @@ The following compilers should work:
             brew install gcc
     </details>
 
-  * [clang 6+](https://clang.llvm.org/)
+  * [clang 12+](https://clang.llvm.org/)
     <details>
     <summary>Install command</summary>
 
@@ -238,6 +238,10 @@ The output looks like this:
     "unixlike-gcc-11-release"     - GCC 11 Release
     "unixlike-gcc-12-debug"       - GCC 12 Debug
     "unixlike-gcc-12-release"     - GCC 12 Release
+    "unixlike-gcc-13-debug"       - GCC 13 Debug
+    "unixlike-gcc-13-release"     - GCC 13 Release
+    "unixlike-gcc-14-debug"       - GCC 14 Debug
+    "unixlike-gcc-14-release"     - GCC 14 Release
     "unixlike-clang-12-debug"     - Clang 12 Debug
     "unixlike-clang-12-release"   - Clang 12 Release
     "unixlike-clang-13-debug"     - Clang 13 Debug
@@ -246,6 +250,14 @@ The output looks like this:
     "unixlike-clang-14-release"   - Clang 14 Release
     "unixlike-clang-15-debug"     - Clang 15 Debug
     "unixlike-clang-15-release"   - Clang 15 Release
+    "unixlike-clang-16-debug"     - Clang 16 Debug
+    "unixlike-clang-16-release"   - Clang 16 Release
+    "unixlike-clang-17-debug"     - Clang 17 Debug
+    "unixlike-clang-17-release"   - Clang 17 Release
+    "unixlike-clang-18-debug"     - Clang 18 Debug
+    "unixlike-clang-18-release"   - Clang 18 Release
+    "unixlike-clang-19-debug"     - Clang 19 Debug
+    "unixlike-clang-19-release"   - Clang 19 Release
 
 Choose a configuration which is suitable and use following command for example.
 
@@ -269,6 +281,43 @@ Run all test using preset and ctest:
 For example:
 
     cmake --preset test-unixlike-clang-15-debug
+
+
+## Possible option
+
+| Option  | Comment | Default |
+| ------- | -------- | -------- |
+| ENABLE_PCH | Enable Precompiled Headers | OFF |
+| _**Static analyzers**_ |
+| ENABLE_CPPCHECK | Enable static analysis with cppcheck | OFF |
+| ENABLE_CLANG_TIDY | Enable static analysis with clang-tidy | OFF |
+| ENABLE_INCLUDE_WHAT_YOU_USE | Enable static analysis with include-what-you-use | OFF |
+| _**Tooling**_ |
+| ENABLE_CACHE | Enable cache if available | ON |
+| ENABLE_DOXYGEN | Enable doxygen doc builds of source | OFF |
+| _**Sanitizers**_ |
+| ENABLE_SANITIZER_UNDEFINED_BEHAVIOR | Enable undefined behavior sanitizer | OFF |
+| ENABLE_SANITIZER_THREAD | Enable thread sanitizer | OFF |
+| ENABLE_SANITIZER_MEMORY | Enable memory sanitizer | OFF |
+| ENABLE_SANITIZER_ADDRESS | Enable address sanitizer | OFF |
+| ENABLE_SANITIZER_LEAK | Enable leak sanitizer | OFF |
+| _**Others**_ |
+| ENABLE_COVERAGE | Enable coverage reporting for gcc/clang | OFF |
+| ENABLE_IPO | Enable Interprocedural Optimization, aka Link Time Optimization (LTO) | OFF |
+| WARNINGS_AS_ERRORS | Treat compiler warnings as errors | ON |
+| BUILD_SHARED_LIBS | Enable compilation of shared libraries | OFF |
+| ENABLE_TESTING | Enable Test Builds | ON |
+| ENABLE_FUZZING | Enable Fuzzing Builds | OFF |
+| _**Examples**_ |
+| CPP_STARTER_USE_SML | Enable compilation of SML sample | OFF |
+| CPP_STARTER_USE_BOOST_BEAST | Enable compilation of boost beast sample | OFF |
+| CPP_STARTER_USE_CROW | Enable compilation of crow sample | OFF |
+| CPP_STARTER_USE_CPPZMQ_PROTO | Enable compilation of protobuf and cppzmq sample | OFF |
+| CPP_STARTER_USE_EMBEDDED_TOOLCHAIN | Enable compilation of an example cortex m4 project | OFF |
+| CPP_STARTER_USE_QT | Enable compilation of an example QT project | | OFF |
+| _**Test frameworks**_ |
+| CPP_STARTER_USE_CATCH2 | Enable compilation of an example test project using catch2 | ON |
+| CPP_STARTER_USE_GTEST | Enable compilation of an example test project using googletest | ON |
 
 
 ## Troubleshooting
