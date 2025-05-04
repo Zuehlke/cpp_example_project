@@ -296,6 +296,42 @@ jobs:
       shell: bash
       run:  cmake --build --preset build-unixlike-${{ matrix.compiler.preset }}-${{ matrix.buildtype }}
 
+  windows-mingw:
+    name: ${{ matrix.os }}, MinGW ${{ matrix.buildtype }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
+      matrix:
+        os: [windows-2022]
+        buildtype: [debug]
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          install: make
+      - name: Install conan
+        run: |
+          pacman --noconfirm -S mingw-w64-x86_64-ninja
+          pacman --noconfirm -S mingw-w64-x86_64-gcc
+          pacman --noconfirm -S mingw-w64-x86_64-cmake
+          pacman --noconfirm -S mingw-w64-x86_64-python
+          pacman --noconfirm -S mingw-w64-x86_64-python-pip
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install conan==1.58
+
+      - name: Configure CMake
+        run: cmake --preset win32-gcc-x64-mingw-${{ matrix.buildtype }}
+
+      - name: Build
+        run:  cmake --build --preset build-win32-gcc-x64-mingw-${{ matrix.buildtype }}
+
+      - name: Test
+        run: ctest --preset test-win32-gcc-x64-mingw-${{ matrix.buildtype }}
+
   linux-qt:
     name: ${{ matrix.os }}, QT ${{ matrix.compiler.name }}, C++${{ matrix.cxx }}
     runs-on: ${{ matrix.os }}
