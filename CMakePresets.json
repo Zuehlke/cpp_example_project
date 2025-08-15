@@ -18,7 +18,9 @@
       "cacheVariables": {
         "CPP_STARTER_USE_SML": "ON",
         "CPP_STARTER_USE_BOOST_BEAST": "ON",
-        "CPP_STARTER_USE_CROW": "ON"
+        "CPP_STARTER_USE_CROW": "ON",
+        "CPP_STARTER_USE_OPEN62541PP": "ON",
+        "CPP_STARTER_USE_OPEN62541": "ON"
       }
     },
     {
